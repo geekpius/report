@@ -1,6 +1,3 @@
-import {Link} from "@inertiajs/react";
-import HorizontalDivider from "@/Components/HorizontalDivider";
-import RLink from "@/Components/RLink";
 
 export default function Footer() {
     let date = new Date();

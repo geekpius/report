@@ -2,6 +2,11 @@ import {Link} from "@inertiajs/react";
 import HorizontalDivider from "@/Components/HorizontalDivider";
 
 export default function SideBar({ user }) {
+    let dashboardStatus = route().current('dashboard')? 'active':''
+    let academicStatus = route().current('academic')? 'active':''
+    let studentStatus = route().current('student')? 'active':''
+    let subjectStatus = route().current('subject')? 'active':''
+
     return (
         <ul className="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
@@ -14,7 +19,7 @@ export default function SideBar({ user }) {
 
             <HorizontalDivider />
 
-            <li className="nav-item active">
+            <li className={'nav-item '+dashboardStatus}>
                 <Link className="nav-link" href={route('dashboard')}>
                     <i className="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></Link>
@@ -22,23 +27,26 @@ export default function SideBar({ user }) {
 
             <HorizontalDivider />
 
-            <div className="sidebar-heading">
-                Interface
-            </div>
+            <li className={'nav-item '+academicStatus}>
+                <Link className="nav-link" href={route('academic')}>
+                    <i className="fas fa-fw fa-language"></i>
+                    <span>Academics</span></Link>
+            </li>
 
-            <li className="nav-item">
-                <Link className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-                   aria-expanded="true" aria-controls="collapseTwo">
-                    <i className="fas fa-fw fa-cog"></i>
-                    <span>Components</span>
-                </Link>
-                <div id="collapseTwo" className="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div className="bg-white py-2 collapse-inner rounded">
-                        <h6 className="collapse-header">Custom Components:</h6>
-                        <Link className="collapse-item" href={route('dashboard')}>Buttons</Link>
-                        <Link className="collapse-item" href={route('dashboard')}>Cards</Link>
-                    </div>
-                </div>
+            <HorizontalDivider />
+
+            <li className={'nav-item '+studentStatus}>
+                <Link className="nav-link" href={route('student')}>
+                    <i className="fas fa-fw fa-graduation-cap"></i>
+                    <span>Students</span></Link>
+            </li>
+
+            <HorizontalDivider />
+
+            <li className={'nav-item '+subjectStatus}>
+                <Link className="nav-link" href={route('subject')}>
+                    <i className="fas fa-fw fa-book-open"></i>
+                    <span>Subjects</span></Link>
             </li>
 
         </ul>
