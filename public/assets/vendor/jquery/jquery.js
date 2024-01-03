@@ -3433,7 +3433,7 @@ function createOptions( options ) {
 }
 
 /*
- * Create a callback list using the following parameters:
+ * CreateSubjectAction a callback list using the following parameters:
  *
  *	options: an optional list of space-separated options that will change how
  *			the callback list behaves or a more traditional option object
@@ -9192,7 +9192,7 @@ function ajaxConvert( s, response, jqXHR, isSuccess ) {
 		// Work with a copy of dataTypes in case we need to modify it for conversion
 		dataTypes = s.dataTypes.slice();
 
-	// Create converters map with lowercased keys
+	// CreateSubjectAction converters map with lowercased keys
 	if ( dataTypes[ 1 ] ) {
 		for ( conv in s.converters ) {
 			converters[ conv.toLowerCase() ] = s.converters[ conv ];
@@ -9413,7 +9413,7 @@ jQuery.extend( {
 			// uncached part of the url
 			uncached,
 
-			// Create the final options object
+			// CreateSubjectAction the final options object
 			s = jQuery.ajaxSetup( {}, options ),
 
 			// Callbacks context
@@ -10100,7 +10100,7 @@ jQuery.ajaxTransport( function( options ) {
 					};
 				}
 
-				// Create the abort callback
+				// CreateSubjectAction the abort callback
 				callback = callback( "abort" );
 
 				try {
@@ -10588,7 +10588,7 @@ jQuery.fn.extend( {
 	}
 } );
 
-// Create scrollLeft and scrollTop methods
+// CreateSubjectAction scrollLeft and scrollTop methods
 jQuery.each( { scrollLeft: "pageXOffset", scrollTop: "pageYOffset" }, function( method, prop ) {
 	var top = "pageYOffset" === prop;
 
@@ -10642,7 +10642,7 @@ jQuery.each( [ "top", "left" ], function( _i, prop ) {
 } );
 
 
-// Create innerHeight, innerWidth, height, width, outerHeight and outerWidth methods
+// CreateSubjectAction innerHeight, innerWidth, height, width, outerHeight and outerWidth methods
 jQuery.each( { Height: "height", Width: "width" }, function( name, type ) {
 	jQuery.each( {
 		padding: "inner" + name,
