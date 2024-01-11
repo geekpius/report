@@ -2,17 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Actions\Grade\StoreGradeAction;
+use App\Http\Actions\Grade\ViewGradeAction;
+use App\Http\Requests\GradeRequest;
 use App\Models\Grade;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Inertia\Response;
 
 class GradeController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(ViewGradeAction $action): Response
     {
-        //
+        return $action->handle();
     }
 
     /**
@@ -26,9 +31,9 @@ class GradeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(GradeRequest $request, StoreGradeAction $action): RedirectResponse
     {
-        //
+        return $action->handle($request);
     }
 
     /**

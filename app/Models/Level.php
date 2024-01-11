@@ -12,6 +12,6 @@ class Level extends Model
 
     public function subjects(): BelongsToMany
     {
-        return $this->belongsToMany(Subject::class);
+        return $this->belongsToMany(Subject::class, 'level_subject')->withTimestamps();
     }
 }

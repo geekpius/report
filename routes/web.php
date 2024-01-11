@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AcademicController;
+use App\Http\Controllers\GradeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SubjectController;
@@ -49,6 +50,12 @@ Route::middleware('auth')->group(function () {
         Route::get('', [SubjectController::class, 'index'])->name('subject');
         Route::get('/create', [SubjectController::class, 'create'])->name('subject.create');
         Route::post('/store', [SubjectController::class, 'store'])->name('subject.submit');
+        Route::post('/assign-class', [SubjectController::class, 'assignClass'])->name('subject.assign.class');
+    });
+
+    Route::prefix('grades')->group(function (){
+        Route::get('', [GradeController::class, 'index'])->name('grade');
+        Route::post('/store', [GradeController::class, 'store'])->name('grade.submit');
     });
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

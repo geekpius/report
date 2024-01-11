@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Actions\Subject\AssignClassAction;
 use App\Http\Actions\Subject\CreateSubjectAction;
 use App\Http\Actions\Subject\StoreSubjectAction;
 use App\Http\Actions\Subject\ViewSubjectAction;
+use App\Http\Requests\AssignClassRequest;
 use App\Http\Requests\SubjectRequest;
 use App\Models\Subject;
 use Illuminate\Http\RedirectResponse;
@@ -49,9 +51,9 @@ class SubjectController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Subject $subject)
+    public function assignClass(AssignClassRequest $request, AssignClassAction $action): RedirectResponse
     {
-        //
+        return $action->handle($request);
     }
 
     /**

@@ -6,6 +6,7 @@ export default function SideBar({ user }) {
     let academicStatus = route().current('academic')? 'active':''
     let studentStatus = route().current('student')? 'active':''
     let subjectStatus = route().current('subject')? 'active':''
+    let gradeStatus = route().current('grade')? 'active':''
 
     return (
         <ul className="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
@@ -47,6 +48,14 @@ export default function SideBar({ user }) {
                 <Link className="nav-link" href={route('subject')}>
                     <i className="fas fa-fw fa-book-open"></i>
                     <span>Subjects</span></Link>
+            </li>
+
+            <HorizontalDivider />
+
+            <li className={'nav-item '+gradeStatus}>
+                <Link className="nav-link" href={route('grade')}>
+                    <i className="fas fa-fw fa-sort-numeric-up"></i>
+                    <span>Grades</span></Link>
             </li>
 
         </ul>

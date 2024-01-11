@@ -18,7 +18,7 @@ class Subject extends Model
 
     public function levels(): BelongsToMany
     {
-        return $this->belongsToMany(Level::class);
+        return $this->belongsToMany(Level::class, 'level_subject')->withTimestamps();
     }
 
     public function setNameAttribute(string $value) : void

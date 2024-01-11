@@ -15,6 +15,7 @@ import {useForm} from "@inertiajs/react";
 import TextInput from "@/Components/TextInput.jsx";
 import InputError from "@/Components/InputError.jsx";
 import SelectInput from "@/Components/SelectInput.jsx";
+import closeModal from "@/helpers/closeModal.ts";
 
 export default function View({ auth, academics }) {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -28,7 +29,9 @@ export default function View({ auth, academics }) {
     const submit = (e) => {
         e.preventDefault();
 
-        post(route('academic.submit'));
+        post(route('academic.submit'), {
+            onSuccess: () => closeModal('addAcademicModal')
+        });
     };
 
 
@@ -130,7 +133,7 @@ export default function View({ auth, academics }) {
 
                     <ModalFooter>
                         <PrimaryButton className="btn bg-secondary text-white mr-3" type="button" data-dismiss="modal">Cancel</PrimaryButton>
-                        <PrimaryButton className="ms-4 btn btn-primary" data-dismiss="modal" disabled={processing}>
+                        <PrimaryButton className="ms-4 btn btn-primary" disabled={processing}>
                             Submit
                         </PrimaryButton>
                     </ModalFooter>
