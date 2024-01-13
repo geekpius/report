@@ -7,8 +7,9 @@ import TRow from "@/Components/Table/TRow";
 import TH from "@/Components/Table/TH";
 import TD from "@/Components/Table/TD.jsx";
 import RLink from "@/Components/RLink";
+import Alert from "@/Components/Alert.jsx";
 
-export default function View({ auth, students }) {
+export default function View({ auth, flash, students }) {
 
     return (
         <AuthenticatedLayout
@@ -20,6 +21,12 @@ export default function View({ auth, students }) {
                       <i className="fas fa-fw fa-plus-circle"></i> Add New
             </RLink>}
             >
+                {
+                    flash.success && <Alert className='alert-info'>
+                        <p>{ flash.success }</p>
+                    </Alert>
+                }
+
                 <Table>
                     <THead>
                         <TRow className={'bg-dark text-white'}>

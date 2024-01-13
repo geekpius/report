@@ -16,8 +16,9 @@ import TextInput from "@/Components/TextInput.jsx";
 import InputError from "@/Components/InputError.jsx";
 import SelectInput from "@/Components/SelectInput.jsx";
 import closeModal from "@/helpers/closeModal.ts";
+import Alert from "@/Components/Alert.jsx";
 
-export default function View({ auth, academics }) {
+export default function View({ auth, flash, academics }) {
     const { data, setData, post, processing, errors, reset } = useForm({
         year: '',
         term: '',
@@ -45,6 +46,12 @@ export default function View({ auth, academics }) {
                       <i className="fas fa-fw fa-plus-circle"></i> Add New
             </RLink>}
             >
+                {
+                    flash.success && <Alert className='alert-info'>
+                        <p>{ flash.success }</p>
+                    </Alert>
+                }
+
                 <Table>
                     <THead>
                         <TRow className={'bg-dark text-white'}>

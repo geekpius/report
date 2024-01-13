@@ -17,8 +17,9 @@ import {useForm} from "@inertiajs/react";
 import {useState} from "react";
 import Checkbox from "@/Components/Checkbox.jsx";
 import closeModal from "@/helpers/closeModal.ts";
+import Alert from "@/Components/Alert.jsx";
 
-export default function View({ auth, subjects, levels }) {
+export default function View({ auth, flash, subjects, levels }) {
     const { data, setData, post, processing, errors } = useForm({
         subject_id: '',
         form_ids: [],
@@ -55,6 +56,12 @@ export default function View({ auth, subjects, levels }) {
                       <i className="fas fa-fw fa-plus-circle"></i> Add New
             </RLink>}
             >
+                {
+                    flash.success && <Alert className='alert-info'>
+                        <p>{ flash.success }</p>
+                    </Alert>
+                }
+
                 <Table>
                     <THead>
                         <TRow className={'bg-dark text-white'}>

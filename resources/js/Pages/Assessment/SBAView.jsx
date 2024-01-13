@@ -6,7 +6,6 @@ import TBody from "@/Components/Table/TBody";
 import TRow from "@/Components/Table/TRow";
 import TH from "@/Components/Table/TH";
 import TD from "@/Components/Table/TD.jsx";
-import RLink from "@/Components/RLink";
 import ModalBody from "@/Components/Modals/ModalBody.jsx";
 import ModalFooter from "@/Components/Modals/ModalFooter.jsx";
 import PrimaryButton from "@/Components/PrimaryButton.jsx";
@@ -16,9 +15,9 @@ import TextInput from "@/Components/TextInput.jsx";
 import InputError from "@/Components/InputError.jsx";
 import SelectInput from "@/Components/SelectInput.jsx";
 import closeModal from "@/helpers/closeModal.ts";
-import Alert from "@/Components/Alert.jsx";
+import ObjectSelection from "@/Components/ObjectSelection";
 
-export default function View({ auth, flash, grades }) {
+export default function View({ auth, students, levels }) {
     const { data, setData, post, processing, errors } = useForm({
         low: '',
         high: '',
@@ -38,33 +37,54 @@ export default function View({ auth, flash, grades }) {
     return (
         <AuthenticatedLayout
             user={auth.user}
-            header={<h1 className="h3 mb-0 text-gray-800">Grades</h1>}
+            header={<h1 className="h3 mb-0 text-gray-800">SBA Assessment</h1>}
         >
             <Card className='mb-4'
-                  headerWidget={<RLink className='btn-link text-decoration-none' to="#" data-toggle="modal" data-target="#addGradeModal">
-                      <i className="fas fa-fw fa-plus-circle"></i> Add New
-            </RLink>}
+                  headerWidget={
+                <div className="grid gap-x-8 gap-y-4 sm:grid-cols-1 md:grid-cols-3">
+                    <div>
+                        <ObjectSelection
+                            className={'block w-full'}
+                            data={levels.data}
+                            name="form"
+                            // onChange={(e) => setData('type', e.target.value)}
+                            placeholder={'Select class'}
+                        />
+                    </div>
+                    <div>
+                        <SelectInput
+                            className={'block w-full'}
+                            data={['Core', 'Elective']}
+                            name="type"
+                            // onChange={(e) => setData('type', e.target.value)}
+                            placeholder={'Select subject'}
+                        />
+                    </div>
+                    <div>
+                        <PrimaryButton className="py-2 btn btn-primary" disabled={processing}>
+                            Fetch Students
+                        </PrimaryButton>
+                    </div>
+                </div>
+            }
             >
-                {
-                    flash.success && <Alert className='alert-info'>
-                        <p>{ flash.success }</p>
-                    </Alert>
-                }
-
                 <Table>
                     <THead>
                         <TRow className={'bg-dark text-white'}>
-                            <TH value={'Low'} />
-                            <TH value={'High'} />
-                            <TH value={'Remark'} />
+                            <TH value={'Student #'} />
+                            <TH value={'Name'} />
+                            <TH value={'Gender'} />
+                            <TH value={'Action'} />
                         </TRow>
                     </THead>
-                    <TBody dataFound={grades.data.length>0}>
-                        {grades.data.map((obj) => (
+                    <TBody dataFound={students.data.length>0}>
+                        {students.data.map((obj) => (
                             <TRow key={obj.id}>
-                                <TD value={obj.low} />
-                                <TD value={obj.high} />
-                                <TD value={obj.remark} />
+                                <TD value={obj.number} />
+                                <TD value={obj.name} />
+                                <TD value={obj.gender} />
+                                <TD>
+                                </TD>
                             </TRow>
                         ))}
 
