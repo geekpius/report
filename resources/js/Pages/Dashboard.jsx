@@ -4,6 +4,7 @@ import Column from "@/Components/Column";
 import DataCard from "@/Components/Cards/DataCard.jsx";
 import Bar from "@/Components/Charts/Bar";
 import Pie from "@/Components/Charts/Pie.jsx";
+import Alert from "@/Components/Alert.jsx";
 
 export default function Dashboard({ auth, academic, statistics }) {
     return (
@@ -13,10 +14,10 @@ export default function Dashboard({ auth, academic, statistics }) {
         >
 
             <>
-                <div className="alert alert-info" role="alert">
+                <Alert className='alert-info'>
                     <span className="mr-3">Academic Year: {academic.data.year}</span>
                     <span>Academic Term: {academic.data.term}</span>
-                </div>
+                </Alert>
 
                 <Row>
                     <Column xl='3' md='6' className="mb-4">

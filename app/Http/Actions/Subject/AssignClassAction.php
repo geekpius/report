@@ -15,6 +15,7 @@ class AssignClassAction
         $levels = Level::find($request->form_ids);
         $subject->levels()->sync($levels);
 
+        session()->flash('success', 'Subject assigned to class');
         return redirect()->route('subject');
     }
 
