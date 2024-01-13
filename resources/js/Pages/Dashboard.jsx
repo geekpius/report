@@ -5,7 +5,7 @@ import DataCard from "@/Components/Cards/DataCard.jsx";
 import Bar from "@/Components/Charts/Bar";
 import Pie from "@/Components/Charts/Pie.jsx";
 
-export default function Dashboard({ auth }) {
+export default function Dashboard({ auth, academic, statistics }) {
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -13,18 +13,23 @@ export default function Dashboard({ auth }) {
         >
 
             <>
+                <div className="alert alert-info" role="alert">
+                    <span className="mr-3">Academic Year: {academic.data.year}</span>
+                    <span>Academic Term: {academic.data.term}</span>
+                </div>
+
                 <Row>
                     <Column xl='3' md='6' className="mb-4">
-                        <DataCard className='border-left-primary' title='Earnings (Monthly)' data='$40,000' icon='fas fa-calendar' />
+                        <DataCard className="border-left-primary" title='Students' data={statistics.studentCount} icon='fas fa-graduation-cap' />
                     </Column>
                     <Column xl='3' md='6' className="mb-4">
-                        <DataCard className='border-left-primary' title='Earnings (Monthly)' data='$40,000' icon='fas fa-calendar' />
+                        <DataCard className='border-left-primary' title='Dropped Out' data={statistics.droppedOutStudentCount} icon='fas fa-graduation-cap' />
                     </Column>
                     <Column xl='3' md='6' className="mb-4">
-                        <DataCard className='border-left-primary' title='Earnings (Monthly)' data='$40,000' icon='fas fa-calendar' />
+                        <DataCard className='border-left-primary' title='Completed' data={statistics.completedStudentCount} icon='fas fa-graduation-cap' />
                     </Column>
                     <Column xl='3' md='6' className="mb-4">
-                        <DataCard className='border-left-primary' title='Earnings (Monthly)' data='$40,000' icon='fas fa-calendar' />
+                        <DataCard className='border-left-primary' title='Subjects' data={statistics.subjectCount} icon='fas fa-book-open' />
                     </Column>
                 </Row>
 
