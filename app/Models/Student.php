@@ -9,6 +9,10 @@ class Student extends Model
 {
     use HasFactory;
 
+    const ACTIVE = 'active';
+    const DROPPED_OUT = 'dropped out';
+    const COMPLETED = 'completed';
+
     protected $fillable = [
         'number',
         'name',

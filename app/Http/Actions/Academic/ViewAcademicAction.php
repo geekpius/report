@@ -12,7 +12,7 @@ class ViewAcademicAction
     public function handle(): Response
     {
         return Inertia::render('Academic/View', [
-            'academics' => AcademicResource::collection(Academic::all()),
+            'academics' => AcademicResource::collection(Academic::orderBy('id', 'desc')->get()),
         ]);
     }
 
