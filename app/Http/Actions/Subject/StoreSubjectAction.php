@@ -12,6 +12,7 @@ class StoreSubjectAction
     public function handle(SubjectRequest $request): RedirectResponse
     {
         Subject::create($request->validated());
+        session()->flash('success', 'Subject created');
         return Redirect::route('subject');
     }
 

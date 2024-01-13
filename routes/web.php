@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AcademicController;
+use App\Http\Controllers\AssessmentController;
 use App\Http\Controllers\GradeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StudentController;
@@ -58,8 +59,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 
     Route::prefix('assessments')->group(function (){
-        Route::get('/sba', [GradeController::class, 'index'])->name('sba');
-        Route::get('/exams', [GradeController::class, 'index'])->name('exam');
+        Route::get('/sba', [AssessmentController::class, 'SBAIndex'])->name('sba');
     });
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

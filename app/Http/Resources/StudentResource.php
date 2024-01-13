@@ -21,6 +21,8 @@ class StudentResource extends JsonResource
             'gender' => $this->gender,
             'form' => $this->form,
             'status' => $this->status,
+            'marks' => $this->whenLoaded('marks'),
+            'subjectTotalMarks' => $this->getSubjectTotalMarks(),
         ];
     }
 }

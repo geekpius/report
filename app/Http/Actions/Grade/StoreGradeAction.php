@@ -11,6 +11,7 @@ class StoreGradeAction
     public function handle(GradeRequest $request): RedirectResponse
     {
         Grade::create($request->validated());
+        session()->flash('success', 'Grade created');
         return redirect()->route('grade');
     }
 

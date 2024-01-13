@@ -12,6 +12,7 @@ class StoreAcademicAction
     public function handle(AcademicRequest $request): RedirectResponse
     {
         Academic::create($request->validated());
+        session()->flash('success', 'Academic created');
         return Redirect::route('academic');
     }
 
