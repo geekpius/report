@@ -29,11 +29,10 @@ use Inertia\Inertia;
 //    ]);
 //});
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
+
     Route::prefix('academics')->group(function (){
         Route::get('', [AcademicController::class, 'index'])->name('academic');
         Route::get('/create', [AcademicController::class, 'create'])->name('academic.create');
@@ -56,6 +55,11 @@ Route::middleware('auth')->group(function () {
     Route::prefix('grades')->group(function (){
         Route::get('', [GradeController::class, 'index'])->name('grade');
         Route::post('/store', [GradeController::class, 'store'])->name('grade.submit');
+    });
+
+    Route::prefix('assessments')->group(function (){
+        Route::get('/sba', [GradeController::class, 'index'])->name('sba');
+        Route::get('/exams', [GradeController::class, 'index'])->name('exam');
     });
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
