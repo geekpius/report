@@ -40,7 +40,7 @@ class Mark extends Model
     }
     public function getSubjectAttribute(string $value) : string
     {
-        return ucwords($value);
+        return strtoupper($value);
     }
 
     public function getSubjectTotalMarks(): string
