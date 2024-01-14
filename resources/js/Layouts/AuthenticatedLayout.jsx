@@ -30,9 +30,11 @@ export default function Authenticated({ user, header, children }) {
 
                         <div className="container-fluid">
 
-                            <div className="d-sm-flex align-items-center justify-content-between mb-4">
-                                {header}
-                            </div>
+                            {
+                                header && <div className="d-sm-flex align-items-center justify-content-between mb-4">
+                                    {header}
+                                </div>
+                            }
 
                             {children}
 
