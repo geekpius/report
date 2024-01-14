@@ -17,6 +17,7 @@ class SubjectResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'value' => $this->name,
             'type' => $this->type,
             'levels' => $this->whenLoaded('levels')
         ];
