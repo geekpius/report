@@ -4,7 +4,6 @@ namespace App\Http\Actions\Assessment;
 
 use App\Http\Resources\LevelResource;
 use App\Http\Resources\StudentMarkResource;
-use App\Http\Resources\StudentResource;
 use App\Http\Resources\SubjectResource;
 use App\Models\Academic;
 use App\Models\Level;
