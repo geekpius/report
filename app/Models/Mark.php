@@ -28,6 +28,7 @@ class Mark extends Model
         'assignment_three',
         'assignment_four',
         'exam',
+        'remark',
     ];
     public function student(): BelongsTo
     {
@@ -41,6 +42,15 @@ class Mark extends Model
     public function getSubjectAttribute(string $value) : string
     {
         return strtoupper($value);
+    }
+
+    public function setRemarkAttribute(string $value) : void
+    {
+        $this->attributes['remark'] = strtolower($value);
+    }
+    public function getRemarkAttribute(string $value) : string
+    {
+        return ucwords($value);
     }
 
     public function getSubjectTotalMarks(): string

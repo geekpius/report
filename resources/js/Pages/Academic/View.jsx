@@ -19,7 +19,7 @@ import closeModal from "@/helpers/closeModal.ts";
 import Alert from "@/Components/Alert.jsx";
 
 export default function View({ auth, flash, academics }) {
-    const { data, setData, post, processing, errors, reset } = useForm({
+    const { data, setData, post, processing, errors } = useForm({
         year: '',
         term: '',
         next_term_date: '',

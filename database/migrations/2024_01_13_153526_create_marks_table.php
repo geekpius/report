@@ -29,6 +29,7 @@ return new class extends Migration
             $table->double('assignment_three')->default(0);
             $table->double('assignment_four')->default(0);
             $table->double('exam')->default(0);
+            $table->string('remark');
             $table->timestamps();
         });
     }

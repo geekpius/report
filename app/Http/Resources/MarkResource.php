@@ -30,6 +30,7 @@ class MarkResource extends JsonResource
             'assignmentThree' => $this->assignment_three,
             'assignmentFour' => $this->assignment_four,
             'exam' => $this->exam,
+            'remark' => $this->remark,
             'student' => $this->whenLoaded('student')
         ];
     }

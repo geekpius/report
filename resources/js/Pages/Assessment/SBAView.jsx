@@ -14,9 +14,11 @@ import ObjectSelection from "@/Components/ObjectSelection";
 import Row from "@/Components/Row";
 import Column from "@/Components/Column";
 import {useEffect, useState} from "react";
+import Alert from "@/Components/Alert.jsx";
 
-export default function View({ auth, levels, subjects, students, routeInfo }) {
+export default function View({ auth, levels, subjects, students, routeInfo, flash }) {
     const { data, setData, post, processing, errors } = useForm({
+        student_id: '',
         assessment_one: '',
         assessment_two: '',
         assessment_three: '',
@@ -28,6 +30,8 @@ export default function View({ auth, levels, subjects, students, routeInfo }) {
         assignment_three: '',
         assignment_four: '',
         exam: '',
+        form: '',
+        subject: '',
     });
 
     const [filter, setFilter] = useState({
@@ -36,6 +40,7 @@ export default function View({ auth, levels, subjects, students, routeInfo }) {
     })
 
     const [filteredSubject, setFilteredSubject] = useState([])
+
     const [values, setValues] = useState({
         fieldDisabled: true,
         selectedIndex: -1,
@@ -71,29 +76,35 @@ export default function View({ auth, levels, subjects, students, routeInfo }) {
         setFilteredSubject(newSubjects);
     }, [filter.form]);
 
-    useEffect(() => {
-        if(students.data.length > 0){
-            setValues({
-                fieldDisabled: false,
-                selectedIndex: 0,
-            })
-        }
-    }, []);
-
-    function selectRecord(index, student)
-    {
+    function selectRecord(index, student) {
         setValues({
             fieldDisabled: false,
             selectedIndex: index,
         })
-        console.log(`STUDENT ${index}`, student)
+        setData(data => ({
+            ...data,
+            student_id: student.id,
+            form: routeInfo.query.level,
+            subject: routeInfo.query.subject,
+            assessment_one: student.assessmentOne?? '',
+            assessment_two: student.assessmentTwo?? '',
+            assessment_three: student.assessmentThree?? '',
+            assessment_four: student.assessmentFour?? '',
+            test_one: student.testOne?? '',
+            test_two: student.testTwo?? '',
+            assignment_one: student.assignmentOne?? '',
+            assignment_two: student.assignmentTwo?? '',
+            assignment_three: student.assignmentThree?? '',
+            assignment_four: student.assignmentFour?? '',
+            exam: student.exam?? '',
+        }));
+
     }
     const submit = (e) => {
         e.preventDefault();
 
         post(route('sba.submit'));
     };
-
 
     return (
         <AuthenticatedLayout
@@ -132,6 +143,12 @@ export default function View({ auth, levels, subjects, students, routeInfo }) {
                 </div>
             }
             >
+                {
+                    flash.success && <Alert className='alert-info'>
+                        <p>{ flash.success }</p>
+                    </Alert>
+                }
+
                 <Row>
                     <Column xl='8' lg='8' md='6'>
                         <Table>
@@ -160,6 +177,7 @@ export default function View({ auth, levels, subjects, students, routeInfo }) {
                     </Column>
 
                     <Column xl='3' lg='3' md='5' className='offset-xl-1 offset-lg-1 offset-md-1'>
+                        {errors.form}
                         <form onSubmit={submit}>
                             <div className="border-2 p-2 rounded-md">
                                 <h5 className="text-uppercase text-sm text-primary font-semibold">Class Assessment</h5>

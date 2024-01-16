@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Actions\Assessment\StoreSBAAction;
 use App\Http\Actions\Assessment\ViewSBAAction;
+use App\Http\Requests\SbaRequest;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Response;
 
@@ -19,9 +22,9 @@ class AssessmentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function storeSBA(Request $request)
+    public function storeSBA(SbaRequest $request, StoreSBAAction $action): RedirectResponse
     {
-        //
+        return $action->handle($request);
     }
 
     /**
