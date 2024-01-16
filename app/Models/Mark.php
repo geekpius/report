@@ -29,7 +29,7 @@ class Mark extends Model
         'assignment_four',
         'exam',
     ];
-    public function marks(): BelongsTo
+    public function student(): BelongsTo
     {
         return $this->belongsTo(Student::class, 'student_id');
     }
