@@ -13,12 +13,12 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 
-class ViewSBAAction
+class ViewMarkAction
 {
     public function handle(Request $request): Response
     {
         $academic = Academic::query()->latest()->first();
-        return Inertia::render('Assessment/SBAView', [
+        return Inertia::render('Assessment/MarkView', [
             'levels' => LevelResource::collection(Level::all()),
             'subjects' => SubjectResource::collection(Subject::with('levels')->get()),
             'students' => StudentMarkResource::collection(Student::where('students.form', $request->level)

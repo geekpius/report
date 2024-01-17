@@ -3,7 +3,7 @@
 namespace App\Http\Actions\Assessment;
 
 use App\Http\Requests\GradeRequest;
-use App\Http\Requests\SbaRequest;
+use App\Http\Requests\MarkRequest;
 use App\Models\Academic;
 use App\Models\Grade;
 use App\Models\Mark;
@@ -11,7 +11,7 @@ use Illuminate\Http\RedirectResponse;
 
 class StoreSBAAction
 {
-    public function handle(SbaRequest $request): RedirectResponse
+    public function handle(MarkRequest $request): RedirectResponse
     {
         $academic = Academic::query()->latest()->first();
         $grade = Grade::query()->where('low', '<=', $request->exam)
@@ -22,7 +22,7 @@ class StoreSBAAction
         );
         session()->flash('success', $mark->student->name.' SBA assessment created');
 
-        return redirect()->route('sba', parameters: ['level' => $request->form, 'subject'=>$request->subject]); // ?level=Form%201&subject=ENGLISH%20LANGUAGE
+        return redirect()->route('mark', parameters: ['level' => $request->form, 'subject'=>$request->subject]); // ?level=Form%201&subject=ENGLISH%20LANGUAGE
     }
 
 }

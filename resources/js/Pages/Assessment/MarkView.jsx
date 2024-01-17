@@ -58,7 +58,7 @@ export default function View({ auth, levels, subjects, students, routeInfo, flas
             return;
         }
         router.get(
-            route('sba'),
+            route('mark'),
             { level: filter.form, subject: filter.subject },
             { replace: true, preserveScroll: true, },
             )
@@ -103,7 +103,7 @@ export default function View({ auth, levels, subjects, students, routeInfo, flas
     const submit = (e) => {
         e.preventDefault();
 
-        post(route('sba.submit'));
+        post(route('mark.submit'));
     };
 
     return (

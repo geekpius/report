@@ -59,8 +59,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 
     Route::prefix('assessments')->group(function (){
-        Route::get('/sba', [AssessmentController::class, 'SBAIndex'])->name('sba');
-        Route::post('/store', [AssessmentController::class, 'storeSBA'])->name('sba.submit');
+        Route::get('/marks', [AssessmentController::class, 'markIndex'])->name('mark');
+        Route::post('/store', [AssessmentController::class, 'storeMark'])->name('mark.submit');
     });
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

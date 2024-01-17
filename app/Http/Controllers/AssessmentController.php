@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Actions\Assessment\StoreSBAAction;
-use App\Http\Actions\Assessment\ViewSBAAction;
-use App\Http\Requests\SbaRequest;
+use App\Http\Actions\Assessment\ViewMarkAction;
+use App\Http\Requests\MarkRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Response;
@@ -14,7 +14,7 @@ class AssessmentController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function SBAIndex(Request $request, ViewSBAAction $action): Response
+    public function markIndex(Request $request, ViewMarkAction $action): Response
     {
         return $action->handle($request);
     }
@@ -22,7 +22,7 @@ class AssessmentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function storeSBA(SbaRequest $request, StoreSBAAction $action): RedirectResponse
+    public function storeMark(MarkRequest $request, StoreSBAAction $action): RedirectResponse
     {
         return $action->handle($request);
     }
