@@ -61,5 +61,24 @@ class Mark extends Model
         return number_format($value, 2);
     }
 
+    public function getAssessmentSubTotal(): string
+    {
+        $value = $this->assessment_one + $this->assessment_two + $this->assessment_three
+            + $this->assessment_four;
+        return number_format($value);
+    }
+
+    public function getTestSubTotal(): string
+    {
+        $value = $this->test_one + $this->test_two;
+        return number_format($value);
+    }
+
+    public function getAssignmentSubTotal(): string
+    {
+        $value = $this->assignment_one + $this->assignment_two + $this->assignment_three + $this->assignment_four;
+        return number_format($value);
+    }
+
 
 }

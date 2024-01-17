@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Actions\Assessment\StoreSBAAction;
+use App\Http\Actions\Assessment\ViewAllMarksAction;
 use App\Http\Actions\Assessment\ViewMarkAction;
 use App\Http\Requests\MarkRequest;
 use Illuminate\Http\RedirectResponse;
@@ -30,9 +31,9 @@ class AssessmentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function viewAll(Request $request, ViewAllMarksAction $action): Response
     {
-        //
+        return $action->handle($request);
     }
 
     /**

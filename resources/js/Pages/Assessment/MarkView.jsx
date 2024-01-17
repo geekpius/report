@@ -17,7 +17,7 @@ import {useEffect, useState} from "react";
 import Alert from "@/Components/Alert.jsx";
 
 export default function View({ auth, levels, subjects, students, routeInfo, flash }) {
-    const { data, setData, post, processing, errors } = useForm({
+    const { data, setData, post, processing, errors, clearErrors } = useForm({
         student_id: '',
         assessment_one: '',
         assessment_two: '',
@@ -81,6 +81,7 @@ export default function View({ auth, levels, subjects, students, routeInfo, flas
             fieldDisabled: false,
             selectedIndex: index,
         })
+        clearErrors()
         setData(data => ({
             ...data,
             student_id: student.id,

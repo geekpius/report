@@ -61,6 +61,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::prefix('assessments')->group(function (){
         Route::get('/marks', [AssessmentController::class, 'markIndex'])->name('mark');
         Route::post('/store', [AssessmentController::class, 'storeMark'])->name('mark.submit');
+        Route::get('/marks/all', [AssessmentController::class, 'viewAll'])->name('mark.all');
     });
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

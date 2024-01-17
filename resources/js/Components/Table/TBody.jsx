@@ -7,7 +7,7 @@ export default function TBody({children, dataFound= false}) {
         <tbody>
         {dataFound ? children :
             <TRow>
-                <TD colSpan={'10'} className="text-center" value={'No records found'}/>
+                <TD colSpan={'20'} className="text-center" value={'No records found'}/>
             </TRow>
         }
         </tbody>
