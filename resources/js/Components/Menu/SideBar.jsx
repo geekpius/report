@@ -9,6 +9,7 @@ export default function SideBar({ user }) {
     let gradeStatus = route().current('grade')? 'active':''
     let markStatus = route().current('mark')? 'active':''
     let allMarkStatus = route().current('mark.all')? 'active':''
+    let allAssessmentStatus = route().current('assessment')? 'active':''
 
     return (
         <ul className="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
@@ -65,7 +66,7 @@ export default function SideBar({ user }) {
             <li className={'nav-item '+markStatus}>
                 <Link className="nav-link" href={route('mark')}>
                     <i className="fas fa-fw fa-sort-numeric-up-alt"></i>
-                    <span>Mark Assessment</span></Link>
+                    <span>Assign Marks</span></Link>
             </li>
 
             <HorizontalDivider />
@@ -74,6 +75,14 @@ export default function SideBar({ user }) {
                 <Link className="nav-link" href={route('mark.all')}>
                     <i className="fas fa-fw fa-table"></i>
                     <span>View Marks</span></Link>
+            </li>
+
+            <HorizontalDivider />
+
+            <li className={'nav-item '+allAssessmentStatus}>
+                <Link className="nav-link" href={route('assessment')}>
+                    <i className="fas fa-fw fa-table"></i>
+                    <span>View Assessments</span></Link>
             </li>
 
         </ul>
