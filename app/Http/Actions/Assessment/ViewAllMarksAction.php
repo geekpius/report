@@ -8,8 +8,10 @@ use App\Http\Resources\SubjectResource;
 use App\Models\Academic;
 use App\Models\Level;
 use App\Models\Mark;
+use App\Models\Setting;
 use App\Models\Subject;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -25,6 +27,10 @@ class ViewAllMarksAction
                 ->where('subject', $request->subject)->where('year', $academic->year)
                 ->where('term', $academic->term)->with(['student'])->get()
             ),
+            'percents' => Collection::make([
+                'sba' => (Setting::query()->first()->sba_percent*100),
+                'exam' => (Setting::query()->first()->exam_percent*100),
+            ]),
         ]);
     }
 

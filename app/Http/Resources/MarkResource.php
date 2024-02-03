@@ -35,6 +35,8 @@ class MarkResource extends JsonResource
             'assignmentSubTotal' => $this->assignment_sub_total,
             'exam' => $this->exam,
             'remark' => $this->remark,
+            'sbaPercent' => $this->sba_percent,
+            'examPercent' => $this->exam_percent,
             'total' => $this->total,
             'student' => $this->whenLoaded('student')
         ];

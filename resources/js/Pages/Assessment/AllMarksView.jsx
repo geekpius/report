@@ -7,19 +7,18 @@ import TRow from "@/Components/Table/TRow";
 import TH from "@/Components/Table/TH";
 import TD from "@/Components/Table/TD.jsx";
 import PrimaryButton from "@/Components/PrimaryButton.jsx";
-import {router, useForm} from "@inertiajs/react";
+import {router} from "@inertiajs/react";
 import ObjectSelection from "@/Components/ObjectSelection";
-import {useEffect, useState} from "react";
-import RLink from "@/Components/RLink";
+import useFilter from '@/helpers/useFilter.ts'
+import useSubjectFilter from "@/helpers/useSubjectFilter.ts";
 
-export default function View({ auth, levels, subjects, marks, routeInfo }) {
+export default function View({ auth, levels, subjects, marks, percents, routeInfo }) {
+    const [filter, setFilter] = useFilter({
+            form: routeInfo.query.level,
+            subject: routeInfo.query.subject,
+        })
 
-    const [filter, setFilter] = useState({
-        form: '',
-        subject: '',
-    })
-
-    const [filteredSubject, setFilteredSubject] = useState([])
+    const filteredSubjects = useSubjectFilter(filter.form, subjects.data)
 
     function handleChange(e) {
         setFilter(filter => ({
@@ -40,17 +39,6 @@ export default function View({ auth, levels, subjects, marks, routeInfo }) {
             )
     }
 
-    useEffect(() => {
-        setFilter({
-            form: routeInfo.query.level,
-            subject: routeInfo.query.subject,
-        })
-    }, []);
-
-    useEffect(() => {
-        const newSubjects = subjects.data.filter((obj) => obj.levels.find((lvl) => lvl.name === filter.form))
-        setFilteredSubject(newSubjects);
-    }, [filter.form]);
 
     return (
         <AuthenticatedLayout
@@ -73,7 +61,7 @@ export default function View({ auth, levels, subjects, marks, routeInfo }) {
                     <div>
                         <ObjectSelection
                             className={'block w-full py-1 text-sm'}
-                            data={filteredSubject}
+                            data={filteredSubjects}
                             id="subject"
                             name="subject"
                             value={filter.subject}
@@ -110,6 +98,9 @@ export default function View({ auth, levels, subjects, marks, routeInfo }) {
                             <TH value={'H/W4'} />
                             <TH value={'SubTotal'} />
                             <TH value={'Exam'} />
+                            <TH value={`SBA(${percents.sba}%)`} />
+                            <TH value={`Exam(${percents.exam}%)`} />
+                            <TH value={'Total(100%)'} />
                             <TH value={'Remark'} />
                         </TRow>
                     </THead>
@@ -136,6 +127,9 @@ export default function View({ auth, levels, subjects, marks, routeInfo }) {
                                 <TD value={obj.assignmentFour} />
                                 <TD value={obj.assignmentSubTotal} className='text-primary font-semibold' />
                                 <TD value={obj.exam} />
+                                <TD value={obj.sbaPercent}  className='text-success font-semibold' />
+                                <TD value={obj.examPercent}  className='text-success font-semibold' />
+                                <TD value={obj.total}  className='text-danger font-semibold' />
                                 <TD value={obj.remark} />
                             </TRow>
                         ))}

@@ -13,8 +13,10 @@ import InputError from "@/Components/InputError.jsx";
 import ObjectSelection from "@/Components/ObjectSelection";
 import Row from "@/Components/Row";
 import Column from "@/Components/Column";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import Alert from "@/Components/Alert.jsx";
+import useFilter from "@/helpers/useFilter.ts";
+import useSubjectFilter from "@/helpers/useSubjectFilter.ts";
 
 export default function View({ auth, levels, subjects, students, routeInfo, flash }) {
     const { data, setData, post, processing, errors, clearErrors } = useForm({
@@ -34,12 +36,12 @@ export default function View({ auth, levels, subjects, students, routeInfo, flas
         subject: '',
     });
 
-    const [filter, setFilter] = useState({
-        form: '',
-        subject: '',
+    const [filter, setFilter] = useFilter({
+        form: routeInfo.query.level,
+        subject: routeInfo.query.subject,
     })
 
-    const [filteredSubject, setFilteredSubject] = useState([])
+    const filteredSubjects = useSubjectFilter(filter.form, subjects.data)
 
     const [values, setValues] = useState({
         fieldDisabled: true,
@@ -64,17 +66,6 @@ export default function View({ auth, levels, subjects, students, routeInfo, flas
             )
     }
 
-    useEffect(() => {
-        setFilter({
-            form: routeInfo.query.level,
-            subject: routeInfo.query.subject,
-        })
-    }, []);
-
-    useEffect(() => {
-        const newSubjects = subjects.data.filter((obj) => obj.levels.find((lvl) => lvl.name === filter.form))
-        setFilteredSubject(newSubjects);
-    }, [filter.form]);
 
     function selectRecord(index, student) {
         setValues({
@@ -128,7 +119,7 @@ export default function View({ auth, levels, subjects, students, routeInfo, flas
                     <div>
                         <ObjectSelection
                             className={'block w-full py-1 text-sm'}
-                            data={filteredSubject}
+                            data={filteredSubjects}
                             id="subject"
                             name="subject"
                             value={filter.subject}
