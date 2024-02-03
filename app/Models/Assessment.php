@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Assessment extends Model
 {
@@ -22,5 +23,18 @@ class Assessment extends Model
         'interest',
         'remark',
     ];
+
+
+    public function student(): BelongsTo
+    {
+        return $this->belongsTo(Student::class, 'student_id');
+    }
+
+    public function getPromoted(): string
+    {
+        if($this->promoted === $this->student->form && strtolower($this->term) !== 'three') return '-';
+        if($this->promoted === $this->student->form && strtolower($this->term) === 'three') return 'Repeated';
+        return $this->promoted;
+    }
 
 }

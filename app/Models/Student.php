@@ -28,6 +28,16 @@ class Student extends Model
         return $this->hasMany(Mark::class);
     }
 
+    public function overalls(): HasMany
+    {
+        return $this->hasMany(Overall::class);
+    }
+
+    public function assessments(): HasMany
+    {
+        return $this->hasMany(Assessment::class);
+    }
+
     public function setNameAttribute(string $value) : void
     {
         $this->attributes['name'] = strtolower($value);

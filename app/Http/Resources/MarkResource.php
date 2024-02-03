@@ -24,17 +24,18 @@ class MarkResource extends JsonResource
             'assessmentTwo' => $this->assessment_two,
             'assessmentThree' => $this->assessment_three,
             'assessmentFour' => $this->assessment_four,
-            'assessmentSubTotal' => $this->getAssessmentSubTotal(),
+            'assessmentSubTotal' => $this->assessment_sub_total,
             'testOne' => $this->test_one,
             'testTwo' => $this->test_two,
-            'testSubTotal' => $this->getTestSubTotal(),
+            'testSubTotal' => $this->test_sub_total,
             'assignmentOne' => $this->assignment_one,
             'assignmentTwo' => $this->assignment_two,
             'assignmentThree' => $this->assignment_three,
             'assignmentFour' => $this->assignment_four,
-            'assignmentSubTotal' => $this->getAssignmentSubTotal(),
+            'assignmentSubTotal' => $this->assignment_sub_total,
             'exam' => $this->exam,
             'remark' => $this->remark,
+            'total' => $this->total,
             'student' => $this->whenLoaded('student')
         ];
     }

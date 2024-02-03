@@ -21,14 +21,20 @@ class Mark extends Model
         'assessment_two',
         'assessment_three',
         'assessment_four',
+        'assessment_sub_total',
         'test_one',
         'test_two',
+        'test_sub_total',
         'assignment_one',
         'assignment_two',
         'assignment_three',
         'assignment_four',
+        'assignment_sub_total',
         'exam',
         'remark',
+        'sba_percent',
+        'exam_percent',
+        'total',
     ];
     public function student(): BelongsTo
     {
@@ -53,31 +59,11 @@ class Mark extends Model
         return ucwords($value);
     }
 
-    public function getSubjectTotalMarks(): string
+    public function updateMarkTotal()
     {
-        $value = $this->assessment_one + $this->assessment_two + $this->assessment_three
-            + $this->assessment_four + $this->test_one + $this->test_two + $this->assignment_one
-            + $this->assignment_two + $this->assignment_three + $this->assignment_four + $this->exam;
-        return number_format($value, 2);
-    }
-
-    public function getAssessmentSubTotal(): string
-    {
-        $value = $this->assessment_one + $this->assessment_two + $this->assessment_three
-            + $this->assessment_four;
-        return number_format($value);
-    }
-
-    public function getTestSubTotal(): string
-    {
-        $value = $this->test_one + $this->test_two;
-        return number_format($value);
-    }
-
-    public function getAssignmentSubTotal(): string
-    {
-        $value = $this->assignment_one + $this->assignment_two + $this->assignment_three + $this->assignment_four;
-        return number_format($value);
+        $this->update([
+            'total' => $this->assessment_sub_total + $this->test_sub_total + $this->assignment_sub_total + $this->exam,
+        ]);
     }
 
 

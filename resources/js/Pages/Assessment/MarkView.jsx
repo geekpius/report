@@ -178,10 +178,9 @@ export default function View({ auth, levels, subjects, students, routeInfo, flas
                     </Column>
 
                     <Column xl='3' lg='3' md='5' className='offset-xl-1 offset-lg-1 offset-md-1'>
-                        {errors.form}
                         <form onSubmit={submit}>
                             <div className="border-2 p-2 rounded-md">
-                                <h5 className="text-uppercase text-sm text-primary font-semibold">Class Assessment</h5>
+                                <h5 className="text-uppercase text-sm text-primary font-semibold">Class Assessment <small className="font-semibold">(10 each)</small></h5>
                                 <div>
                                     <TextInput
                                         id="assessment_one"
@@ -245,7 +244,7 @@ export default function View({ auth, levels, subjects, students, routeInfo, flas
                             </div>
 
                             <div className="border-2 p-2 rounded-md mt-4">
-                                <h5 className="text-uppercase text-sm text-primary font-semibold">Class Test</h5>
+                                <h5 className="text-uppercase text-sm text-primary font-semibold">Class Test <small className="font-semibold">(20 each)</small></h5>
                                 <div>
                                     <TextInput
                                         id="test_one"
@@ -278,7 +277,7 @@ export default function View({ auth, levels, subjects, students, routeInfo, flas
                             </div>
 
                             <div className="border-2 p-2 rounded-md mt-4">
-                                <h5 className="text-uppercase text-sm text-primary font-semibold">Assignment/Project Work</h5>
+                                <h5 className="text-uppercase text-sm text-primary font-semibold">Assignment/Project Work <small className="font-semibold">(5 each)</small></h5>
                                 <div>
                                     <TextInput
                                         id="assignment_one"

@@ -1,0 +1,327 @@
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+import Card from "@/Components/Cards/Card";
+import Table from "@/Components/Table/Table";
+import THead from "@/Components/Table/THead";
+import TBody from "@/Components/Table/TBody";
+import TRow from "@/Components/Table/TRow";
+import TH from "@/Components/Table/TH";
+import TD from "@/Components/Table/TD.jsx";
+import PrimaryButton from "@/Components/PrimaryButton.jsx";
+import {router, useForm} from "@inertiajs/react";
+import TextInput from "@/Components/TextInput.jsx";
+import InputError from "@/Components/InputError.jsx";
+import ObjectSelection from "@/Components/ObjectSelection";
+import Row from "@/Components/Row";
+import Column from "@/Components/Column";
+import {useEffect, useState} from "react";
+import Alert from "@/Components/Alert.jsx";
+import SelectInput from "@/Components/SelectInput";
+
+export default function View({ auth, levels, students, academic, routeInfo, flash }) {
+    const { data, setData, post, processing, errors, clearErrors } = useForm({
+        name: '',
+        student_id: '',
+        year: '',
+        term: '',
+        level: '',
+        number_in_class: '',
+        attendance: '',
+        promoted: '',
+        conduct: '',
+        attitude: '',
+        interest: '',
+        remark: '',
+    });
+
+    const [form, setForm] = useState('')
+
+    const [values, setValues] = useState({
+        fieldDisabled: true,
+        selectedIndex: -1,
+    })
+    function handleChange(e) {
+        setForm(e.target.value)
+    }
+
+    function filterStudents(){
+        if(!form){
+            alert('Select all filters')
+            return;
+        }
+        router.get(
+            route('assessment.create'),
+            { level: form},
+            { replace: true, preserveScroll: true, },
+            )
+    }
+
+    useEffect(() => {
+        setForm(routeInfo.query.level)
+    }, []);
+
+    function selectRecord(index, student) {
+        setValues({
+            fieldDisabled: false,
+            selectedIndex: index,
+        })
+        clearErrors()
+        setData(data => ({
+            ...data,
+            name: student.name,
+            student_id: student.id,
+            year: academic.data.year,
+            term: academic.data.term,
+            level: routeInfo.query.level,
+            number_in_class: students.data.length,
+            attendance: student.attendance?? '',
+            promoted: student.promoted?? routeInfo.query.level,
+            conduct: student.conduct?? '',
+            attitude: student.attitude?? '',
+            interest: student.interest?? '',
+            remark: student.remark?? '',
+        }));
+
+    }
+    const submit = (e) => {
+        e.preventDefault();
+
+        post(route('assessment.store'));
+    };
+
+    return (
+        <AuthenticatedLayout
+            user={auth.user}
+        >
+            <Card className='mb-2'
+                  headerWidget={
+                <div className="grid gap-x-8 gap-y-4 sm:grid-cols-1 md:grid-cols-3">
+                    <div>
+                        <ObjectSelection
+                            className={'block w-full py-1 text-sm'}
+                            data={levels.data}
+                            id={'form'}
+                            name="form"
+                            value={form}
+                            onChange={(e) => handleChange(e)}
+                            placeholder={'Select class'}
+                        />
+                    </div>
+                    <div>
+                        <PrimaryButton className="py-1 text-sm btn btn-primary" onClick={filterStudents}>
+                            Fetch Students
+                        </PrimaryButton>
+                    </div>
+                </div>
+            }
+            >
+                {
+                    flash.success && <Alert className='alert-info'>
+                        <p>{ flash.success }</p>
+                    </Alert>
+                }
+
+                <Row>
+                    <Column xl='8' lg='8' md='6'>
+                        <Table>
+                            <THead>
+                                <TRow className={'bg-dark text-white'}>
+                                    <TH value={'ID#'} />
+                                    <TH value={'Name'} />
+                                    <TH value={'Gender'} />
+                                </TRow>
+                            </THead>
+                            <TBody dataFound={students.data.length>0}>
+                                {students.data.map((obj, index) => (
+                                    <TRow
+                                        className={'cursor-pointer ' + (values.selectedIndex === index? 'bg-primary':'')}
+                                        key={obj.id}
+                                        onClick={() => selectRecord(index, obj)}
+                                    >
+                                        <TD value={obj.number} className={values.selectedIndex === index? 'text-white':''} />
+                                        <TD value={obj.name} className={values.selectedIndex === index? 'text-white':''} />
+                                        <TD value={obj.gender} className={values.selectedIndex === index? 'text-white':''} />
+                                    </TRow>
+                                ))}
+
+                            </TBody>
+                        </Table>
+                    </Column>
+
+                    <Column xl='3' lg='3' md='5' className='offset-xl-1 offset-lg-1 offset-md-1'>
+                        <form onSubmit={submit}>
+                            <div className="border-2 p-2 rounded-md">
+                                <h5 className="text-uppercase text-sm text-primary font-semibold">Student Info</h5>
+                                <div>
+                                    <TextInput
+                                        id="student_id"
+                                        type="tel"
+                                        name="student_id"
+                                        value={data.student_id}
+                                        className="mt-1 block w-full py-1 text-sm hidden"
+                                        onChange={(e) => setData('student_id', e.target.value)}
+                                        placeholder={'Student id'}
+                                        disabled={true}
+                                    />
+                                    <TextInput
+                                        id="name"
+                                        type="text"
+                                        name="name"
+                                        value={data.name}
+                                        className="mt-1 block w-full py-1 text-sm"
+                                        onChange={(e) => setData('name', e.target.value)}
+                                        placeholder={'Student name'}
+                                        disabled={true}
+                                    />
+
+                                    <InputError message={errors.student_id} className="mt-2" />
+                                </div>
+
+                                <div className="mt-2">
+                                    <TextInput
+                                        id="year"
+                                        type="text"
+                                        name="year"
+                                        value={data.year}
+                                        className="mt-1 block w-full py-1 text-sm"
+                                        onChange={(e) => setData('year', e.target.value)}
+                                        placeholder={'Current year'}
+                                        disabled={true}
+                                    />
+
+                                    <InputError message={errors.year} className="mt-2" />
+                                </div>
+
+                                <div className="mt-2">
+                                    <TextInput
+                                        id="term"
+                                        type="text"
+                                        name="term"
+                                        value={data.term}
+                                        className="mt-1 block w-full py-1 text-sm"
+                                        onChange={(e) => setData('term', e.target.value)}
+                                        placeholder={'Current term'}
+                                        disabled={true}
+                                    />
+
+                                    <InputError message={errors.term} className="mt-2" />
+                                </div>
+
+                                <div className="mt-2">
+                                    <TextInput
+                                        id="number_in_class"
+                                        type="tel"
+                                        name="number_in_class"
+                                        value={data.number_in_class}
+                                        className="mt-1 block w-full py-1 text-sm"
+                                        onChange={(e) => setData('number_in_class', e.target.value)}
+                                        placeholder={'Number in class'}
+                                        disabled={true}
+                                    />
+
+                                    <InputError message={errors.number_in_class} className="mt-2" />
+                                </div>
+                            </div>
+
+
+                            <div className="border-2 p-2 rounded-md mt-4">
+                                <h5 className="text-uppercase text-sm text-primary font-semibold">Assessment Info</h5>
+                                <div>
+                                    <TextInput
+                                        id="attendance"
+                                        type="tel"
+                                        name="attendance"
+                                        value={data.attendance}
+                                        className="mt-1 block w-full py-1 text-sm"
+                                        onChange={(e) => setData('attendance', e.target.value)}
+                                        placeholder={'Enter attendance'}
+                                        disabled={values.fieldDisabled}
+                                    />
+
+                                    <InputError message={errors.attendance} className="mt-2" />
+                                </div>
+
+                                <div className="mt-2">
+                                    <ObjectSelection
+                                        className={'block w-full py-1 text-sm'}
+                                        data={levels.data}
+                                        id={'promoted'}
+                                        name="promoted"
+                                        value={data.promoted}
+                                        onChange={(e) => setData('promoted', e.target.value)}
+                                        placeholder={'Select promoted'}
+                                        disabled={values.fieldDisabled || data.term !== 'three'}
+                                    />
+                                    <InputError message={errors.promoted} className="mt-2" />
+                                </div>
+
+                                <div className="mt-2">
+                                    <SelectInput
+                                        className={'block w-full py-1 text-sm'}
+                                        data={['Satisfactory', 'Respectful', 'Humble', 'Approachable', 'Truant', 'Bully', 'Humble', 'Enthusiastic Learner who follow school rules', 'Has positive attitude towards school', 'Enjoys school', 'Contributes to class discussion', 'Class participation has improved', 'Demonstrates creativity', 'Demonstrates progress', 'Unsatisfactory class work', 'Weak in math fundamentals']}
+                                        id={'conduct'}
+                                        name="conduct"
+                                        value={data.conduct}
+                                        onChange={(e) => setData('conduct', e.target.value)}
+                                        placeholder={'Select conduct'}
+                                        disabled={values.fieldDisabled}
+                                    />
+                                    <InputError message={errors.conduct} className="mt-2" />
+                                </div>
+
+                                <div className="mt-2">
+                                    <SelectInput
+                                        className={'block w-full py-1 text-sm'}
+                                        data={['Hardworking', 'Not serious in class', 'Slow', 'Lazy', 'Dependable', 'Sociable']}
+                                        id={'attitude'}
+                                        name="attitude"
+                                        value={data.attitude}
+                                        onChange={(e) => setData('attitude', e.target.value)}
+                                        placeholder={'Select attitude'}
+                                        disabled={values.fieldDisabled}
+                                    />
+                                    <InputError message={errors.attitude} className="mt-2" />
+                                </div>
+
+                                <div className="mt-2">
+                                    <SelectInput
+                                        className={'block w-full py-1 text-sm'}
+                                        data={['Reading', 'Dancing', 'Drumming', 'Sports', 'Music', 'Art work']}
+                                        id={'interest'}
+                                        name="interest"
+                                        value={data.interest}
+                                        onChange={(e) => setData('interest', e.target.value)}
+                                        placeholder={'Select interest'}
+                                        disabled={values.fieldDisabled}
+                                    />
+                                    <InputError message={errors.interest} className="mt-2" />
+                                </div>
+
+                                <div className="mt-2">
+                                    <SelectInput
+                                        className={'block w-full py-1 text-sm'}
+                                        data={['Keep it up', 'Could do better', 'More room for improvement', 'Has improved', 'Good at Mathematics', 'Good at English', 'Good at Science', 'Buck Up', 'Must do extra hard work']}
+                                        id={'remark'}
+                                        name="remark"
+                                        value={data.remark}
+                                        onChange={(e) => setData('remark', e.target.value)}
+                                        placeholder={'Select class teacher\'s remark'}
+                                        disabled={values.fieldDisabled}
+                                    />
+                                    <InputError message={errors.remark} className="mt-2" />
+                                </div>
+                            </div>
+
+                            <div className="flex items-center justify-end mt-4">
+                                <PrimaryButton className="ms-4 px-4 btn btn-primary" disabled={processing}>
+                                    <i className="fas fa-save mr-2"></i>  Record
+                                </PrimaryButton>
+                            </div>
+                        </form>
+                    </Column>
+                </Row>
+            </Card>
+
+
+        </AuthenticatedLayout>
+        );
+}

@@ -11,6 +11,8 @@ import {router, useForm} from "@inertiajs/react";
 import ObjectSelection from "@/Components/ObjectSelection";
 import {useEffect, useState} from "react";
 import RLink from "@/Components/RLink";
+import Column from "@/Components/Column";
+import Row from "@/Components/Row.jsx";
 
 export default function View({ auth, levels, assessments, routeInfo }) {
 
@@ -42,24 +44,31 @@ export default function View({ auth, levels, assessments, routeInfo }) {
         >
             <Card className='mb-2'
                   headerWidget={
-                <div className="grid gap-x-8 gap-y-4 sm:grid-cols-1 md:grid-cols-3">
-                    <div>
-                        <ObjectSelection
-                            className={'block w-full py-1 text-sm'}
-                            data={levels.data}
-                            id={'form'}
-                            name="form"
-                            value={form}
-                            onChange={(e) => handleChange(e)}
-                            placeholder={'Select class'}
-                        />
-                    </div>
-                    <div>
-                        <PrimaryButton className="py-1 text-sm btn btn-primary" onClick={filterStudents}>
-                            Fetch Students
-                        </PrimaryButton>
-                    </div>
-                </div>
+                      <div>
+                          <div className="mb-3">
+                              <RLink className="text-sm btn-link" to={route('assessment.create')}>
+                                  <i className="fas fa-plus-circle"></i> Assess Students
+                              </RLink>
+                          </div>
+                          <div className="grid gap-x-8 gap-y-4 sm:grid-cols-1 md:grid-cols-3">
+                              <div>
+                                  <ObjectSelection
+                                      className={'block w-full py-1 text-sm'}
+                                      data={levels.data}
+                                      id={'form'}
+                                      name="form"
+                                      value={form}
+                                      onChange={(e) => handleChange(e)}
+                                      placeholder={'Select class'}
+                                  />
+                              </div>
+                              <div>
+                                  <PrimaryButton className="py-1 text-sm btn btn-primary" onClick={filterStudents}>
+                                      Fetch Students
+                                  </PrimaryButton>
+                              </div>
+                          </div>
+                      </div>
             }
             >
                 <Table>
@@ -68,11 +77,12 @@ export default function View({ auth, levels, assessments, routeInfo }) {
                             <TH value={'ID#'} />
                             <TH value={'Name'} />
                             <TH value={'Gender'} />
+                            <TH value={'Term'} />
                             <TH value={'Promoted'} />
                             <TH value={'Conduct'} />
                             <TH value={'Attitude'} />
                             <TH value={'Interest'} />
-                            <TH value={'Remark'} />
+                            <TH value={'C.T Remark'} />
                         </TRow>
                     </THead>
                     <TBody dataFound={assessments.data.length>0}>
@@ -83,7 +93,8 @@ export default function View({ auth, levels, assessments, routeInfo }) {
                                 <TD value={obj.student.number} />
                                 <TD value={obj.student.name} />
                                 <TD value={obj.student.gender} />
-                                <TD value={obj.promoted === obj.student.form ? 'Repeated': obj.promoted} />
+                                <TD value={obj.term} />
+                                <TD value={obj.promoted} />
                                 <TD value={obj.conduct} />
                                 <TD value={obj.attitude} />
                                 <TD value={obj.interest} />

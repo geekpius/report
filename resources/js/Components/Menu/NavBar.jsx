@@ -156,7 +156,7 @@ export default function NavBar({ user }) {
                             <i className="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                             Profile
                         </RLink>
-                        <RLink className="dropdown-item" to="#">
+                        <RLink className="dropdown-item" to={route('setting')}>
                             <i className="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
                             Settings
                         </RLink>
