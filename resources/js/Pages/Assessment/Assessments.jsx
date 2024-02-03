@@ -7,16 +7,14 @@ import TRow from "@/Components/Table/TRow";
 import TH from "@/Components/Table/TH";
 import TD from "@/Components/Table/TD.jsx";
 import PrimaryButton from "@/Components/PrimaryButton.jsx";
-import {router, useForm} from "@inertiajs/react";
+import {router} from "@inertiajs/react";
 import ObjectSelection from "@/Components/ObjectSelection";
-import {useEffect, useState} from "react";
 import RLink from "@/Components/RLink";
-import Column from "@/Components/Column";
-import Row from "@/Components/Row.jsx";
+import useLevel from "@/helpers/useLevel.ts";
 
 export default function View({ auth, levels, assessments, routeInfo }) {
 
-    const [form, setForm] = useState('')
+    const [form, setForm] = useLevel(routeInfo.query.level)
 
     function handleChange(e) {
         setForm(e.target.value)
@@ -33,10 +31,6 @@ export default function View({ auth, levels, assessments, routeInfo }) {
             { replace: true, preserveScroll: true, },
             )
     }
-
-    useEffect(() => {
-        setForm(routeInfo.query.level)
-    }, []);
 
     return (
         <AuthenticatedLayout

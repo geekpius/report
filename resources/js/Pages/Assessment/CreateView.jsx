@@ -13,9 +13,10 @@ import InputError from "@/Components/InputError.jsx";
 import ObjectSelection from "@/Components/ObjectSelection";
 import Row from "@/Components/Row";
 import Column from "@/Components/Column";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import Alert from "@/Components/Alert.jsx";
 import SelectInput from "@/Components/SelectInput";
+import useLevel from "@/helpers/useLevel.ts";
 
 export default function View({ auth, levels, students, academic, routeInfo, flash }) {
     const { data, setData, post, processing, errors, clearErrors } = useForm({
@@ -33,7 +34,7 @@ export default function View({ auth, levels, students, academic, routeInfo, flas
         remark: '',
     });
 
-    const [form, setForm] = useState('')
+    const [form, setForm] = useLevel(routeInfo.query.level)
 
     const [values, setValues] = useState({
         fieldDisabled: true,
@@ -54,10 +55,6 @@ export default function View({ auth, levels, students, academic, routeInfo, flas
             { replace: true, preserveScroll: true, },
             )
     }
-
-    useEffect(() => {
-        setForm(routeInfo.query.level)
-    }, []);
 
     function selectRecord(index, student) {
         setValues({
