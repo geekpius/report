@@ -14,6 +14,18 @@ class DatabaseSeeder extends Seeder
     {
          \App\Models\User::factory(1)->create();
          \App\Models\Setting::factory(1)->create();
+         \App\Models\Academic::factory(1)->create();
+         \App\Models\Level::factory()->create([
+             'name' => 'Form 1'
+         ]);
+
+        \App\Models\Level::factory()->create([
+            'name' => 'Form 2'
+        ]);
+
+        \App\Models\Level::factory()->create([
+            'name' => 'Form 3'
+        ]);
 
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',

@@ -10,6 +10,10 @@ class Level extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+    ];
+
     public function subjects(): BelongsToMany
     {
         return $this->belongsToMany(Subject::class, 'level_subject')->withTimestamps();
