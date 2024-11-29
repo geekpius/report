@@ -18,12 +18,13 @@ return new class extends Migration
             $table->string('year');
             $table->string('term');
             $table->integer('number_in_class');
-            $table->integer('attendance');
-            $table->string('promoted');
-            $table->string('conduct');
-            $table->string('attitude');
-            $table->string('interest');
-            $table->string('remark');
+            $table->integer('attendance')->nullable();
+            $table->string('promoted')->nullable();
+            $table->string('conduct')->nullable();
+            $table->string('attitude')->nullable();
+            $table->string('interest')->nullable();
+            $table->string('remark')->nullable();
+            $table->string('head_remark')->nullable();
             $table->timestamps();
         });
     }

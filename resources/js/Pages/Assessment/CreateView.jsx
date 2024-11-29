@@ -17,6 +17,7 @@ import {useState} from "react";
 import Alert from "@/Components/Alert.jsx";
 import SelectInput from "@/Components/SelectInput";
 import useLevel from "@/helpers/useLevel.ts";
+import {isAdmin, isClassTeacher} from "@/helpers/functions.ts";
 
 export default function View({ auth, levels, students, academic, routeInfo, flash }) {
     const { data, setData, post, processing, errors, clearErrors } = useForm({
@@ -32,6 +33,7 @@ export default function View({ auth, levels, students, academic, routeInfo, flas
         attitude: '',
         interest: '',
         remark: '',
+        head_remark: '',
     });
 
     const [form, setForm] = useLevel(routeInfo.query.level)
@@ -76,6 +78,7 @@ export default function View({ auth, levels, students, academic, routeInfo, flas
             attitude: student.attitude?? '',
             interest: student.interest?? '',
             remark: student.remark?? '',
+            head_remark: student.headRemark?? '',
         }));
 
     }
@@ -154,7 +157,7 @@ export default function View({ auth, levels, students, academic, routeInfo, flas
                                         type="tel"
                                         name="student_id"
                                         value={data.student_id}
-                                        className="mt-1 block w-full py-1 text-sm hidden"
+                                        className="mt-1 w-full py-1 text-sm hidden"
                                         onChange={(e) => setData('student_id', e.target.value)}
                                         placeholder={'Student id'}
                                         disabled={true}
@@ -170,7 +173,7 @@ export default function View({ auth, levels, students, academic, routeInfo, flas
                                         disabled={true}
                                     />
 
-                                    <InputError message={errors.student_id} className="mt-2" />
+                                    <InputError message={errors.name} className="mt-2" />
                                 </div>
 
                                 <div className="mt-2">
@@ -237,80 +240,102 @@ export default function View({ auth, levels, students, academic, routeInfo, flas
                                     <InputError message={errors.attendance} className="mt-2" />
                                 </div>
 
-                                <div className="mt-2">
-                                    <ObjectSelection
-                                        className={'block w-full py-1 text-sm'}
-                                        data={levels.data}
-                                        id={'promoted'}
-                                        name="promoted"
-                                        value={data.promoted}
-                                        onChange={(e) => setData('promoted', e.target.value)}
-                                        placeholder={'Select promoted'}
-                                        disabled={values.fieldDisabled || data.term !== 'three'}
-                                    />
-                                    <InputError message={errors.promoted} className="mt-2" />
-                                </div>
+                                {
+                                    isAdmin(auth.roles) && <>
+                                        <div className="mt-2">
+                                            <ObjectSelection
+                                                className={'block w-full py-1 text-sm'}
+                                                data={levels.data}
+                                                id={'promoted'}
+                                                name="promoted"
+                                                value={data.promoted}
+                                                onChange={(e) => setData('promoted', e.target.value)}
+                                                placeholder={'Select promoted'}
+                                                disabled={values.fieldDisabled || data.term !== 'three'}
+                                            />
+                                            <InputError message={errors.promoted} className="mt-2"/>
+                                        </div>
 
-                                <div className="mt-2">
-                                    <SelectInput
-                                        className={'block w-full py-1 text-sm'}
-                                        data={['Satisfactory', 'Respectful', 'Humble', 'Approachable', 'Truant', 'Bully', 'Humble', 'Enthusiastic Learner who follow school rules', 'Has positive attitude towards school', 'Enjoys school', 'Contributes to class discussion', 'Class participation has improved', 'Demonstrates creativity', 'Demonstrates progress', 'Unsatisfactory class work', 'Weak in math fundamentals']}
-                                        id={'conduct'}
-                                        name="conduct"
-                                        value={data.conduct}
-                                        onChange={(e) => setData('conduct', e.target.value)}
-                                        placeholder={'Select conduct'}
-                                        disabled={values.fieldDisabled}
-                                    />
-                                    <InputError message={errors.conduct} className="mt-2" />
-                                </div>
+                                        <div className="mt-2">
+                                            <SelectInput
+                                                className={'block w-full py-1 text-sm'}
+                                                data={['Satisfactory', 'Respectful', 'Humble', 'Approachable', 'Truant', 'Bully', 'Humble', 'Enthusiastic Learner who follow school rules', 'Has positive attitude towards school', 'Enjoys school', 'Contributes to class discussion', 'Class participation has improved', 'Demonstrates creativity', 'Demonstrates progress', 'Unsatisfactory class work', 'Weak in math fundamentals']}
+                                                id={'conduct'}
+                                                name="conduct"
+                                                value={data.conduct}
+                                                onChange={(e) => setData('conduct', e.target.value)}
+                                                placeholder={'Select conduct'}
+                                                disabled={values.fieldDisabled}
+                                            />
+                                            <InputError message={errors.conduct} className="mt-2"/>
+                                        </div>
 
-                                <div className="mt-2">
-                                    <SelectInput
-                                        className={'block w-full py-1 text-sm'}
-                                        data={['Hardworking', 'Not serious in class', 'Slow', 'Lazy', 'Dependable', 'Sociable']}
-                                        id={'attitude'}
-                                        name="attitude"
-                                        value={data.attitude}
-                                        onChange={(e) => setData('attitude', e.target.value)}
-                                        placeholder={'Select attitude'}
-                                        disabled={values.fieldDisabled}
-                                    />
-                                    <InputError message={errors.attitude} className="mt-2" />
-                                </div>
+                                        <div className="mt-2">
+                                            <SelectInput
+                                                className={'block w-full py-1 text-sm'}
+                                                data={['Hardworking', 'Not serious in class', 'Slow', 'Lazy', 'Dependable', 'Sociable']}
+                                                id={'attitude'}
+                                                name="attitude"
+                                                value={data.attitude}
+                                                onChange={(e) => setData('attitude', e.target.value)}
+                                                placeholder={'Select attitude'}
+                                                disabled={values.fieldDisabled}
+                                            />
+                                            <InputError message={errors.attitude} className="mt-2"/>
+                                        </div>
 
-                                <div className="mt-2">
-                                    <SelectInput
-                                        className={'block w-full py-1 text-sm'}
-                                        data={['Reading', 'Dancing', 'Drumming', 'Sports', 'Music', 'Art work']}
-                                        id={'interest'}
-                                        name="interest"
-                                        value={data.interest}
-                                        onChange={(e) => setData('interest', e.target.value)}
-                                        placeholder={'Select interest'}
-                                        disabled={values.fieldDisabled}
-                                    />
-                                    <InputError message={errors.interest} className="mt-2" />
-                                </div>
+                                        <div className="mt-2">
+                                            <SelectInput
+                                                className={'block w-full py-1 text-sm'}
+                                                data={['Reading', 'Dancing', 'Drumming', 'Sports', 'Music', 'Art work']}
+                                                id={'interest'}
+                                                name="interest"
+                                                value={data.interest}
+                                                onChange={(e) => setData('interest', e.target.value)}
+                                                placeholder={'Select interest'}
+                                                disabled={values.fieldDisabled}
+                                            />
+                                            <InputError message={errors.interest} className="mt-2"/>
+                                        </div>
+                                    </>
+                                }
 
-                                <div className="mt-2">
-                                    <SelectInput
-                                        className={'block w-full py-1 text-sm'}
-                                        data={['Keep it up', 'Could do better', 'More room for improvement', 'Has improved', 'Good at Mathematics', 'Good at English', 'Good at Science', 'Buck Up', 'Must do extra hard work']}
-                                        id={'remark'}
-                                        name="remark"
-                                        value={data.remark}
-                                        onChange={(e) => setData('remark', e.target.value)}
-                                        placeholder={'Select class teacher\'s remark'}
-                                        disabled={values.fieldDisabled}
-                                    />
-                                    <InputError message={errors.remark} className="mt-2" />
-                                </div>
+                                {
+                                    (isAdmin(auth.roles) || isClassTeacher(auth.roles)) && <div className="mt-2">
+                                        <SelectInput
+                                            className={'block w-full py-1 text-sm'}
+                                            data={['Keep it up', 'Could do better', 'More room for improvement', 'Has improved', 'Good at Mathematics', 'Good at English', 'Good at Science', 'Buck Up', 'Must do extra hard work']}
+                                            id={'remark'}
+                                            name="remark"
+                                            value={data.remark}
+                                            onChange={(e) => setData('remark', e.target.value)}
+                                            placeholder={'Select class teacher\'s remark'}
+                                            disabled={values.fieldDisabled}
+                                        />
+                                        <InputError message={errors.remark} className="mt-2"/>
+                                    </div>
+                                }
+
+                                {
+                                    isAdmin(auth.roles) && <div className="mt-2">
+                                        <SelectInput
+                                            className={'block w-full py-1 text-sm'}
+                                            data={['Keep it up', 'Could do better', 'More room for improvement', 'Has improved', 'Good at Mathematics', 'Good at English', 'Good at Science', 'Buck Up', 'Must do extra hard work']}
+                                            id={'head_remark'}
+                                            name="head_remark"
+                                            value={data.head_remark}
+                                            onChange={(e) => setData('head_remark', e.target.value)}
+                                            placeholder={'Select head teacher\'s remark'}
+                                            disabled={values.fieldDisabled}
+                                        />
+                                        <InputError message={errors.head_remark} className="mt-2"/>
+                                    </div>
+                                }
                             </div>
 
                             <div className="flex items-center justify-end mt-4">
                                 <PrimaryButton className="ms-4 px-4 btn btn-primary" disabled={processing}>
-                                    <i className="fas fa-save mr-2"></i>  Record
+                                    <i className="fas fa-save mr-2"></i> Record
                                 </PrimaryButton>
                             </div>
                         </form>
@@ -320,5 +345,5 @@ export default function View({ auth, levels, students, academic, routeInfo, flas
 
 
         </AuthenticatedLayout>
-        );
+    );
 }

@@ -1,6 +1,5 @@
-import { useEffect } from 'react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, Link, useForm } from '@inertiajs/react';
+import { useForm } from '@inertiajs/react';
 import RLink from "@/Components/RLink.jsx";
 import Card from "@/Components/Cards/Card.jsx";
 import TextInput from "@/Components/TextInput.jsx";
@@ -12,7 +11,7 @@ import SelectInput from "@/Components/SelectInput";
 import ObjectSelection from "@/Components/ObjectSelection";
 
 export default function CreateOrUpdate({ auth, student, levels }) {
-    const { data, setData, post, processing, errors, reset } = useForm({
+    const { data, setData, post, processing, errors } = useForm({
         name: '',
         gender: '',
         form: '',
@@ -71,7 +70,7 @@ export default function CreateOrUpdate({ auth, student, levels }) {
                                         className={'mt-1 block w-full'}
                                         data={levels.data}
                                         value={data.form}
-                                        name="gender"
+                                        name="form"
                                         onChange={(e) => setData('form', e.target.value)}
                                         placeholder={'Select form'}
                                     />

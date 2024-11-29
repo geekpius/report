@@ -26,6 +26,7 @@ class AssessmentResource extends JsonResource
             'attitude' => $this->attitude,
             'interest' => $this->interest,
             'remark' => $this->remark,
+            'headRemark' => $this->head_remark,
             'student' => $this->whenLoaded('student')
         ];
     }

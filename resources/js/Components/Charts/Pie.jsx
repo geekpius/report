@@ -8,13 +8,13 @@ export default function Pie() {
             </div>
             <div className="mt-4 text-center small">
                 <span className="mr-2">
-                    <i className="fas fa-circle text-primary"></i> Form 1
+                    <i className="fas fa-circle text-primary"></i> BS 7
                 </span>
                 <span className="mr-2">
-                    <i className="fas fa-circle text-success"></i> Form 2
+                    <i className="fas fa-circle text-success"></i> BS 8
                 </span>
                 <span className="mr-2">
-                    <i className="fas fa-circle text-info"></i> Form 3
+                    <i className="fas fa-circle text-info"></i> BS 9
                 </span>
             </div>
         </Card>

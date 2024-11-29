@@ -29,12 +29,13 @@ class AssessmentRequest extends FormRequest
             'term' => ['required', 'string',],
             'level' => ['required', 'string',],
             'number_in_class' => ['required', 'integer',],
-            'attendance' => ['required', 'integer',],
-            'promoted' => ['required', 'string',],
-            'conduct' => ['required', 'string',],
-            'attitude' => ['required', 'string',],
-            'interest' => ['required', 'string',],
-            'remark' => ['required', 'string',],
+            'attendance' => ['nullable', 'integer',],
+            'promoted' => ['nullable', 'string',],
+            'conduct' => ['nullable', 'string',],
+            'attitude' => ['nullable', 'string',],
+            'interest' => ['nullable', 'string',],
+            'remark' => ['nullable', 'string',],
+            'head_remark' => ['nullable', 'string',],
         ];
     }
 }

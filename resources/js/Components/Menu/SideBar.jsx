@@ -1,8 +1,12 @@
-import {Link} from "@inertiajs/react";
+import {Link, usePage} from "@inertiajs/react";
 import HorizontalDivider from "@/Components/HorizontalDivider";
+import {isAdmin, isClassTeacher} from "@/helpers/functions.ts";
 
 export default function SideBar({ user }) {
+    const { auth } = usePage().props;
+
     let dashboardStatus = route().current('dashboard')? 'active':''
+    let userStatus = route().current('users')? 'active':''
     let academicStatus = route().current('academic')? 'active':''
     let studentStatus = route().current('student')? 'active':''
     let subjectStatus = route().current('subject')? 'active':''
@@ -29,37 +33,49 @@ export default function SideBar({ user }) {
                     <span>Dashboard</span></Link>
             </li>
 
-            <HorizontalDivider />
+            {
+                isAdmin(auth.roles) && <>
+                    <HorizontalDivider />
 
-            <li className={'nav-item '+academicStatus}>
-                <Link className="nav-link" href={route('academic')}>
-                    <i className="fas fa-fw fa-language"></i>
-                    <span>Academics</span></Link>
-            </li>
+                    <li className={'nav-item '+userStatus}>
+                        <Link className="nav-link" href={route('users')}>
+                            <i className="fas fa-fw fa-users"></i>
+                            <span>Users</span></Link>
+                    </li>
 
-            <HorizontalDivider />
+                    <HorizontalDivider />
 
-            <li className={'nav-item '+studentStatus}>
-                <Link className="nav-link" href={route('student')}>
-                    <i className="fas fa-fw fa-graduation-cap"></i>
-                    <span>Students</span></Link>
-            </li>
+                    <li className={'nav-item '+academicStatus}>
+                        <Link className="nav-link" href={route('academic')}>
+                            <i className="fas fa-fw fa-language"></i>
+                            <span>Academics</span></Link>
+                    </li>
 
-            <HorizontalDivider />
+                    <HorizontalDivider />
 
-            <li className={'nav-item '+subjectStatus}>
-                <Link className="nav-link" href={route('subject')}>
-                    <i className="fas fa-fw fa-book-open"></i>
-                    <span>Subjects</span></Link>
-            </li>
+                    <li className={'nav-item '+studentStatus}>
+                        <Link className="nav-link" href={route('student')}>
+                            <i className="fas fa-fw fa-graduation-cap"></i>
+                            <span>Students</span></Link>
+                    </li>
 
-            <HorizontalDivider />
+                    <HorizontalDivider />
 
-            <li className={'nav-item '+gradeStatus}>
-                <Link className="nav-link" href={route('grade')}>
-                    <i className="fas fa-fw fa-sort-numeric-up"></i>
-                    <span>Grades</span></Link>
-            </li>
+                    <li className={'nav-item '+subjectStatus}>
+                        <Link className="nav-link" href={route('subject')}>
+                            <i className="fas fa-fw fa-book-open"></i>
+                            <span>Subjects</span></Link>
+                    </li>
+
+                    <HorizontalDivider />
+
+                    <li className={'nav-item '+gradeStatus}>
+                        <Link className="nav-link" href={route('grade')}>
+                            <i className="fas fa-fw fa-sort-numeric-up"></i>
+                            <span>Grades</span></Link>
+                    </li>
+                </>
+            }
 
             <HorizontalDivider />
 
@@ -77,13 +93,17 @@ export default function SideBar({ user }) {
                     <span>View Marks</span></Link>
             </li>
 
-            <HorizontalDivider />
+            {
+                isAdmin(auth.roles) || isClassTeacher(auth.roles) && <>
+                    <HorizontalDivider />
 
-            <li className={'nav-item '+allAssessmentStatus}>
-                <Link className="nav-link" href={route('assessment')}>
-                    <i className="fas fa-fw fa-table"></i>
-                    <span>View Assessments</span></Link>
-            </li>
+                    <li className={'nav-item '+allAssessmentStatus}>
+                        <Link className="nav-link" href={route('assessment')}>
+                            <i className="fas fa-fw fa-table"></i>
+                            <span>View Assessments</span></Link>
+                    </li>
+                </>
+            }
 
         </ul>
     );

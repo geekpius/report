@@ -7,6 +7,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SubjectController;
+use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
@@ -35,6 +36,11 @@ use Inertia\Inertia;
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
+
+    Route::prefix('users')->group(function (){
+        Route::get('', [UserController::class, 'index'])->name('users');
+        Route::post('/store', [UserController::class, 'store'])->name('users.store');
+    });
 
     Route::prefix('academics')->group(function (){
         Route::get('', [AcademicController::class, 'index'])->name('academic');

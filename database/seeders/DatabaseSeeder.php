@@ -16,15 +16,31 @@ class DatabaseSeeder extends Seeder
          \App\Models\Setting::factory(1)->create();
          \App\Models\Academic::factory(1)->create();
          \App\Models\Level::factory()->create([
-             'name' => 'Form 1'
+             'name' => 'BS 7'
          ]);
 
         \App\Models\Level::factory()->create([
-            'name' => 'Form 2'
+            'name' => 'BS 8'
         ]);
 
         \App\Models\Level::factory()->create([
-            'name' => 'Form 3'
+            'name' => 'BS 9'
+        ]);
+
+        \App\Models\Role::factory()->create([
+            'name' => 'admin'
+        ]);
+
+        \App\Models\Role::factory()->create([
+            'name' => 'admin'
+        ]);
+
+        \App\Models\Role::factory()->create([
+            'name' => 'subject teacher'
+        ]);
+
+        \App\Models\Role::factory()->create([
+            'name' => 'class teacher'
         ]);
 
         // \App\Models\User::factory()->create([

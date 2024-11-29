@@ -22,6 +22,7 @@ class Assessment extends Model
         'attitude',
         'interest',
         'remark',
+        'head_remark',
     ];
 
 

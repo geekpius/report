@@ -109,14 +109,14 @@ export default function View({ auth, flash, grades }) {
                         <div className="mt-4">
                             <SelectInput
                                 className={'mt-1 block w-full'}
-                                data={['High', 'Higher', 'Highest', 'Average', 'High Average', 'Low Average', 'Low']}
+                                data={['High', 'Higher', 'Highest', 'Average', 'High Average', 'Low Average', 'Low', 'Lowest', 'Fail']}
                                 value={data.remark}
                                 name="remark"
                                 onChange={(e) => setData('remark', e.target.value)}
                                 placeholder={'Select remark'}
                             />
 
-                            <InputError message={errors.term} className="mt-2" />
+                            <InputError message={errors.remark} className="mt-2" />
                         </div>
 
                     </ModalBody>
