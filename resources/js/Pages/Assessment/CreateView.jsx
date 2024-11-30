@@ -88,6 +88,8 @@ export default function View({ auth, levels, students, academic, routeInfo, flas
         post(route('assessment.store'));
     };
 
+    const PROMOTED_LIST = [...levels.data, {value: 'Repeated', name: 'Repeated'}, {value: 'On Trial', name: 'On Trial'}]
+
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -245,7 +247,7 @@ export default function View({ auth, levels, students, academic, routeInfo, flas
                                         <div className="mt-2">
                                             <ObjectSelection
                                                 className={'block w-full py-1 text-sm'}
-                                                data={levels.data}
+                                                data={PROMOTED_LIST || []}
                                                 id={'promoted'}
                                                 name="promoted"
                                                 value={data.promoted}
@@ -258,8 +260,9 @@ export default function View({ auth, levels, students, academic, routeInfo, flas
 
                                         <div className="mt-2">
                                             <SelectInput
+                                                optionClassName={'capitalize'}
                                                 className={'block w-full py-1 text-sm'}
-                                                data={['Satisfactory', 'Respectful', 'Humble', 'Approachable', 'Truant', 'Bully', 'Humble', 'Enthusiastic Learner who follow school rules', 'Has positive attitude towards school', 'Enjoys school', 'Contributes to class discussion', 'Class participation has improved', 'Demonstrates creativity', 'Demonstrates progress', 'Unsatisfactory class work', 'Weak in math fundamentals']}
+                                                data={['Satisfactory', 'Respectful', 'Humble', 'Approachable', 'Truant', 'Bully', 'Sociable']}
                                                 id={'conduct'}
                                                 name="conduct"
                                                 value={data.conduct}
@@ -272,8 +275,9 @@ export default function View({ auth, levels, students, academic, routeInfo, flas
 
                                         <div className="mt-2">
                                             <SelectInput
+                                                optionClassName={'capitalize'}
                                                 className={'block w-full py-1 text-sm'}
-                                                data={['Hardworking', 'Not serious in class', 'Slow', 'Lazy', 'Dependable', 'Sociable']}
+                                                data={['Hardworking', 'Not serious in class', 'Quiet in class', 'Peer influence', 'Curios', 'Slow', 'Lazy', 'Dependable', 'Short attention span', 'Eager to learn']}
                                                 id={'attitude'}
                                                 name="attitude"
                                                 value={data.attitude}
@@ -286,8 +290,9 @@ export default function View({ auth, levels, students, academic, routeInfo, flas
 
                                         <div className="mt-2">
                                             <SelectInput
+                                                optionClassName={'capitalize'}
                                                 className={'block w-full py-1 text-sm'}
-                                                data={['Reading', 'Dancing', 'Drumming', 'Sports', 'Music', 'Art work']}
+                                                data={['Reading', 'Drumming', 'Sports', 'Music and dance', 'Art work', 'Drawing', 'Experimenting', 'Adventurous', 'Technology and Gadget']}
                                                 id={'interest'}
                                                 name="interest"
                                                 value={data.interest}
@@ -303,8 +308,9 @@ export default function View({ auth, levels, students, academic, routeInfo, flas
                                 {
                                     (isAdmin(auth.roles) || isClassTeacher(auth.roles)) && <div className="mt-2">
                                         <SelectInput
+                                            optionClassName={'capitalize'}
                                             className={'block w-full py-1 text-sm'}
-                                            data={['Keep it up', 'Could do better', 'More room for improvement', 'Has improved', 'Good at Mathematics', 'Good at English', 'Good at Science', 'Buck Up', 'Must do extra hard work']}
+                                            data={['Good Performance, Keep It Up', 'Could Do Better', 'More Room For Improvement', 'Has Improved', 'Buck Up', 'Must Do Extra Hard Work']}
                                             id={'remark'}
                                             name="remark"
                                             value={data.remark}
@@ -319,8 +325,9 @@ export default function View({ auth, levels, students, academic, routeInfo, flas
                                 {
                                     isAdmin(auth.roles) && <div className="mt-2">
                                         <SelectInput
+                                            optionClassName={'capitalize'}
                                             className={'block w-full py-1 text-sm'}
-                                            data={['Keep it up', 'Could do better', 'More room for improvement', 'Has improved', 'Good at Mathematics', 'Good at English', 'Good at Science', 'Buck Up', 'Must do extra hard work']}
+                                            data={['Enthusiastic Learner who follow school rules', 'Has positive attitude towards school', 'Enjoys School Activities', 'Contributes to class discussion', 'Class participation has improved', 'Demonstrates creativity', 'Demonstrates progress', 'Unsatisfactory class work', 'Weak in math fundamentals']}
                                             id={'head_remark'}
                                             name="head_remark"
                                             value={data.head_remark}

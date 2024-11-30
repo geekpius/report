@@ -1,6 +1,6 @@
 import { forwardRef, useEffect, useRef } from 'react';
 
-export default forwardRef(function SelectInput({ data = [], className = '', isFocused = false, ...props }, ref) {
+export default forwardRef(function SelectInput({ data = [], className = '', isFocused = false, optionClassName, ...props }, ref) {
     const select = ref ? ref : useRef();
 
     useEffect(() => {
@@ -19,7 +19,7 @@ export default forwardRef(function SelectInput({ data = [], className = '', isFo
         >
             <option value=''>{props.placeholder}</option>
             {data.map((obj, index) => (
-                <option key={index} value={obj.toLowerCase()}>{obj}</option>
+                <option className={optionClassName} key={index} value={obj.toLowerCase()}>{obj}</option>
             ))}
         </select>
     );

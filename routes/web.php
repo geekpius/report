@@ -37,34 +37,40 @@ use Inertia\Inertia;
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
 
-    Route::prefix('users')->group(function (){
-        Route::get('', [UserController::class, 'index'])->name('users');
-        Route::post('/store', [UserController::class, 'store'])->name('users.store');
+    Route::middleware(['admin.route'])->group(function () {
+        Route::prefix('users')->group(function (){
+            Route::get('', [UserController::class, 'index'])->name('users');
+            Route::post('/store', [UserController::class, 'store'])->name('users.store');
+        });
+
+        Route::prefix('academics')->group(function (){
+            Route::get('', [AcademicController::class, 'index'])->name('academic');
+            Route::get('/create', [AcademicController::class, 'create'])->name('academic.create');
+            Route::post('/store', [AcademicController::class, 'store'])->name('academic.submit');
+        });
+
+        Route::prefix('students')->group(function (){
+            Route::get('', [StudentController::class, 'index'])->name('student');
+            Route::get('/create', [StudentController::class, 'create'])->name('student.create');
+            Route::post('/store', [StudentController::class, 'store'])->name('student.submit');
+        });
+
+        Route::prefix('subjects')->group(function (){
+            Route::get('', [SubjectController::class, 'index'])->name('subject');
+            Route::get('/create', [SubjectController::class, 'create'])->name('subject.create');
+            Route::post('/store', [SubjectController::class, 'store'])->name('subject.submit');
+            Route::post('/assign-class', [SubjectController::class, 'assignClass'])->name('subject.assign.class');
+        });
+
+        Route::prefix('grades')->group(function (){
+            Route::get('', [GradeController::class, 'index'])->name('grade');
+            Route::post('/store', [GradeController::class, 'store'])->name('grade.submit');
+        });
+
+        Route::get('/settings', [SettingController::class, 'create'])->name('setting');
+        Route::post('/settings', [SettingController::class, 'store'])->name('setting.store');
     });
 
-    Route::prefix('academics')->group(function (){
-        Route::get('', [AcademicController::class, 'index'])->name('academic');
-        Route::get('/create', [AcademicController::class, 'create'])->name('academic.create');
-        Route::post('/store', [AcademicController::class, 'store'])->name('academic.submit');
-    });
-
-    Route::prefix('students')->group(function (){
-        Route::get('', [StudentController::class, 'index'])->name('student');
-        Route::get('/create', [StudentController::class, 'create'])->name('student.create');
-        Route::post('/store', [StudentController::class, 'store'])->name('student.submit');
-    });
-
-    Route::prefix('subjects')->group(function (){
-        Route::get('', [SubjectController::class, 'index'])->name('subject');
-        Route::get('/create', [SubjectController::class, 'create'])->name('subject.create');
-        Route::post('/store', [SubjectController::class, 'store'])->name('subject.submit');
-        Route::post('/assign-class', [SubjectController::class, 'assignClass'])->name('subject.assign.class');
-    });
-
-    Route::prefix('grades')->group(function (){
-        Route::get('', [GradeController::class, 'index'])->name('grade');
-        Route::post('/store', [GradeController::class, 'store'])->name('grade.submit');
-    });
 
     Route::prefix('assessments')->group(function (){
         Route::get('', [AssessmentController::class, 'index'])->name('assessment');
@@ -79,8 +85,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get('/settings', [SettingController::class, 'create'])->name('setting');
-    Route::post('/settings', [SettingController::class, 'store'])->name('setting.store');
 });
 
 Route::get('/migrations', function (){
