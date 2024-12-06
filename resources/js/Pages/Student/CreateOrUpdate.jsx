@@ -9,10 +9,13 @@ import Row from "@/Components/Row";
 import Column from "@/Components/Column";
 import SelectInput from "@/Components/SelectInput";
 import ObjectSelection from "@/Components/ObjectSelection";
+import InputLabel from "@/Components/InputLabel.jsx";
 
 export default function CreateOrUpdate({ auth, student, levels }) {
     const { data, setData, post, processing, errors } = useForm({
-        name: '',
+        surname: '',
+        first_name: '',
+        other_names: '',
         gender: '',
         form: '',
     });
@@ -38,18 +41,49 @@ export default function CreateOrUpdate({ auth, student, levels }) {
                         <div className="w-full sm:max-w-md overflow-hidden">
                             <form onSubmit={submit}>
                                 <div>
+                                    <InputLabel htmlFor={'surname'} value={'Surname'}  />
                                     <TextInput
-                                        id="name"
+                                        id="surname"
                                         type="text"
-                                        name="name"
-                                        value={data.name}
+                                        name="surname"
+                                        value={data.surname}
                                         className="mt-1 block w-full"
                                         isFocused={true}
-                                        onChange={(e) => setData('name', e.target.value)}
-                                        placeholder={'Enter student name'}
+                                        onChange={(e) => setData('surname', e.target.value)}
+                                        placeholder={'Enter student surname'}
                                     />
 
-                                    <InputError message={errors.name} className="mt-2" />
+                                    <InputError message={errors.surname} className="mt-2" />
+                                </div>
+                                <div className={'mt-4'}>
+                                    <InputLabel htmlFor={'first_name'} value={'First name'}  />
+                                    <TextInput
+                                        id="first_name"
+                                        type="text"
+                                        name="first_name"
+                                        value={data.first_name}
+                                        className="mt-1 block w-full"
+                                        isFocused={true}
+                                        onChange={(e) => setData('first_name', e.target.value)}
+                                        placeholder={'Enter student first name'}
+                                    />
+
+                                    <InputError message={errors.first_name} className="mt-2" />
+                                </div>
+                                <div className={'mt-4'}>
+                                    <InputLabel htmlFor={'other_names'} value={'Other names'}  />
+                                    <TextInput
+                                        id="other_names"
+                                        type="text"
+                                        name="other_name"
+                                        value={data.other_names}
+                                        className="mt-1 block w-full"
+                                        isFocused={true}
+                                        onChange={(e) => setData('other_names', e.target.value)}
+                                        placeholder={'Enter student other names'}
+                                    />
+
+                                    <InputError message={errors.other_names} className="mt-2" />
                                 </div>
 
                                 <div className="mt-4">

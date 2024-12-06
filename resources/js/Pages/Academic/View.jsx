@@ -17,22 +17,40 @@ import InputError from "@/Components/InputError.jsx";
 import SelectInput from "@/Components/SelectInput.jsx";
 import closeModal from "@/helpers/closeModal.ts";
 import Alert from "@/Components/Alert.jsx";
+import InputLabel from "@/Components/InputLabel.jsx";
 
 export default function View({ auth, flash, academics }) {
-    const { data, setData, post, processing, errors } = useForm({
+    const { data, setData, post, put, reset, processing, errors } = useForm({
+        id: '',
         year: '',
         term: '',
         next_term_date: '',
         total_attendant: '',
     });
 
+    const handleSetValues = (academic) => {
+        setData(data => ({
+            ...data,
+            id: academic.id,
+            year: academic.year,
+            term: academic.term,
+            next_term_date: academic.nextTermDate,
+            total_attendant: academic.totalAttendant,
+        }));
+    }
 
     const submit = (e) => {
         e.preventDefault();
 
-        post(route('academic.submit'), {
-            onSuccess: () => closeModal('addAcademicModal')
-        });
+        if(data.id){
+            put(route('academic.update', { academic: data.id }), {
+                onSuccess: () => closeModal('addAcademicModal')
+            });
+        }else{
+            post(route('academic.submit'), {
+                onSuccess: () => closeModal('addAcademicModal')
+            });
+        }
     };
 
 
@@ -42,7 +60,9 @@ export default function View({ auth, flash, academics }) {
             header={<h1 className="h3 mb-0 text-gray-800">Academics</h1>}
         >
             <Card className='mb-4'
-                  headerWidget={<RLink className='btn-link text-decoration-none' to="#" data-toggle="modal" data-target="#addAcademicModal">
+                  headerWidget={<RLink className='btn-link text-decoration-none' onClick={() => {
+                      reset();
+                  }} to="#" data-toggle="modal" data-target="#addAcademicModal">
                       <i className="fas fa-fw fa-plus-circle"></i> Add New
             </RLink>}
             >
@@ -58,16 +78,24 @@ export default function View({ auth, flash, academics }) {
                             <TH value={'Year'} />
                             <TH value={'Term'} />
                             <TH value={'Next Term Date'} />
-                            <TH value={'Total Attendant'} />
+                            <TH value={'Total Attendance'} />
+                            <TH value={'Action'} />
                         </TRow>
                     </THead>
                     <TBody dataFound={academics.data.length>0}>
                         {academics.data.map((obj) => (
                             <TRow key={obj.id}>
                                 <TD value={obj.year} />
-                                <TD value={obj.term} />
+                                <TD className={'capitalize'} value={obj.term} />
                                 <TD value={obj.nextTermDate} />
                                 <TD value={obj.totalAttendant} />
+                                <TD>
+                                    <button onClick={() => {
+                                        handleSetValues(obj)
+                                    }} data-toggle="modal" data-target="#addAcademicModal">
+                                        <i className={'fa fa-edit text-primary fa-lg'}></i>
+                                    </button>
+                                </TD>
                             </TRow>
                         ))}
 
@@ -79,8 +107,8 @@ export default function View({ auth, flash, academics }) {
                    aria-hidden="true" title={'Add Academic'} >
                 <form onSubmit={submit}>
                     <ModalBody>
-
                         <div>
+                            <InputLabel htmlFor={'year'} value={'Academic year'}  />
                             <TextInput
                                 id="year"
                                 type="text"
@@ -96,11 +124,13 @@ export default function View({ auth, flash, academics }) {
                         </div>
 
                         <div className="mt-4">
+                            <InputLabel htmlFor={'term'} value={'Academic term'}  />
                             <SelectInput
+                                id={'term'}
                                 className={'mt-1 block w-full'}
                                 data={['One', 'Two', 'Three']}
                                 value={data.term}
-                                name="type"
+                                name="term"
                                 onChange={(e) => setData('term', e.target.value)}
                                 placeholder={'Select term'}
                             />
@@ -109,6 +139,7 @@ export default function View({ auth, flash, academics }) {
                         </div>
 
                         <div className="mt-4">
+                            <InputLabel htmlFor={'next_term_date'} value={'Next term begins'}  />
                             <TextInput
                                 id="next_term_date"
                                 type="date"
@@ -123,6 +154,7 @@ export default function View({ auth, flash, academics }) {
                         </div>
 
                         <div className="mt-4">
+                            <InputLabel htmlFor={'total_attendant'} value={'Total Attendance'}  />
                             <TextInput
                                 id="total_attendant"
                                 type="tel"
@@ -141,7 +173,7 @@ export default function View({ auth, flash, academics }) {
                     <ModalFooter>
                         <PrimaryButton className="btn bg-secondary text-white mr-3" type="button" data-dismiss="modal">Cancel</PrimaryButton>
                         <PrimaryButton className="ms-4 btn btn-primary" disabled={processing}>
-                            Submit
+                            {data.id ? 'Update' : 'Submit'}
                         </PrimaryButton>
                     </ModalFooter>
                 </form>

@@ -8,6 +8,7 @@ import PrimaryButton from "@/Components/PrimaryButton.jsx";
 import Row from "@/Components/Row";
 import Column from "@/Components/Column";
 import Alert from "@/Components/Alert.jsx";
+import InputLabel from "@/Components/InputLabel.jsx";
 
 export default function CreateOrUpdate({ auth, settings, flash }) {
     const { data, setData, post, processing, errors } = useForm({
@@ -55,6 +56,7 @@ export default function CreateOrUpdate({ auth, settings, flash }) {
                         <div className="w-full sm:max-w-md overflow-hidden">
                             <form onSubmit={submit}>
                                 <div>
+                                    <InputLabel htmlFor={'school_name'} value={'School name'}  />
                                     <TextInput
                                         id="school_name"
                                         type="text"
@@ -69,6 +71,7 @@ export default function CreateOrUpdate({ auth, settings, flash }) {
                                     <InputError message={errors.school_name} className="mt-2" />
                                 </div>
                                 <div className="mt-2">
+                                    <InputLabel htmlFor={'school_postal'} value={'School postal address'}  />
                                     <TextInput
                                         id="school_postal"
                                         type="text"
@@ -82,6 +85,7 @@ export default function CreateOrUpdate({ auth, settings, flash }) {
                                     <InputError message={errors.school_postal} className="mt-2" />
                                 </div>
                                 <div className="mt-2">
+                                    <InputLabel htmlFor={'motto'} value={'School motto'}  />
                                     <TextInput
                                         id="motto"
                                         type="text"
@@ -95,6 +99,7 @@ export default function CreateOrUpdate({ auth, settings, flash }) {
                                     <InputError message={errors.motto} className="mt-2" />
                                 </div>
                                 <div className="mt-2">
+                                    <InputLabel htmlFor={'school_phone'} value={'School phone number'}  />
                                     <TextInput
                                         id="school_phone"
                                         type="text"
@@ -108,6 +113,7 @@ export default function CreateOrUpdate({ auth, settings, flash }) {
                                     <InputError message={errors.school_phone} className="mt-2" />
                                 </div>
                                 <div className="mt-2">
+                                    <InputLabel htmlFor={'sba_percent'} value={'School SBA percent'}  />
                                     <TextInput
                                         id="sba_percent"
                                         type="tel"
@@ -121,6 +127,7 @@ export default function CreateOrUpdate({ auth, settings, flash }) {
                                     <InputError message={errors.sba_percent} className="mt-2" />
                                 </div>
                                 <div className="mt-2">
+                                    <InputLabel htmlFor={'exam_percent'} value={'School exam percent'}  />
                                     <TextInput
                                         id="exam_percent"
                                         type="tel"

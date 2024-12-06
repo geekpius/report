@@ -3,8 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class StudentRequest extends FormRequest
+class StudentStatusUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,11 +25,7 @@ class StudentRequest extends FormRequest
     public function rules(): array
     {
         return  [
-            'surname' => ['required', 'string', 'max:255'],
-            'first_name' => ['required', 'string', 'max:255'],
-            'other_names' => ['nullable', 'string', 'max:255'],
-            'gender' => ['required', 'string', 'max:10'],
-            'form' => ['required', 'string'],
+            'status' => ['required', 'string', Rule::in(['active', 'dropped out'])],
         ];
     }
 }

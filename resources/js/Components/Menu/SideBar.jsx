@@ -19,15 +19,14 @@ export default function SideBar({ user }) {
         <ul className="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <Link className="sidebar-brand d-flex align-items-center justify-content-center" href={route('dashboard')}>
-                <div className="sidebar-brand-icon rotate-n-15">
-                    <i className="fas fa-laugh-wink"></i>
-                </div>
-                <div className="sidebar-brand-text mx-3">Report <sup>2</sup></div>
+                <img className="img-profile rounded-circle h-10 w-10"
+                     src="assets/img/logo.png" alt={'Logo'}/>
+                <div className="sidebar-brand-text mx-3">Report</div>
             </Link>
 
-            <HorizontalDivider />
+            <HorizontalDivider/>
 
-            <li className={'nav-item '+dashboardStatus}>
+            <li className={'nav-item ' + dashboardStatus}>
                 <Link className="nav-link" href={route('dashboard')}>
                     <i className="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></Link>
@@ -94,7 +93,7 @@ export default function SideBar({ user }) {
             </li>
 
             {
-                isAdmin(auth.roles) || isClassTeacher(auth.roles) && <>
+                (isAdmin(auth.roles) || isClassTeacher(auth.roles)) && <>
                     <HorizontalDivider />
 
                     <li className={'nav-item '+allAssessmentStatus}>

@@ -1,8 +1,8 @@
 
 
-export default function TD({children, value=null, ...props}) {
+export default function TD({className = '', children, value=null, ...props}) {
     return (
-        <td {...props}>
+        <td className={`capitalize ${className}`} {...props}>
             {value?? children}
         </td>
     );

@@ -47,12 +47,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('', [AcademicController::class, 'index'])->name('academic');
             Route::get('/create', [AcademicController::class, 'create'])->name('academic.create');
             Route::post('/store', [AcademicController::class, 'store'])->name('academic.submit');
+            Route::put('/{academic}/update', [AcademicController::class, 'update'])->name('academic.update');
         });
 
         Route::prefix('students')->group(function (){
             Route::get('', [StudentController::class, 'index'])->name('student');
             Route::get('/create', [StudentController::class, 'create'])->name('student.create');
             Route::post('/store', [StudentController::class, 'store'])->name('student.submit');
+            Route::put('/{student}/update-status', [StudentController::class, 'updateStatus'])->name('student.update.status');
         });
 
         Route::prefix('subjects')->group(function (){

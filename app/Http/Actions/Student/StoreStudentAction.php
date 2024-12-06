@@ -12,7 +12,7 @@ class StoreStudentAction
     public function handle(StudentRequest $request): RedirectResponse
     {
         Student::create($request->validated());
-        session()->flash('success', 'Student created');
+        session()->flash('success', 'Student created successfully');
         return Redirect::route('student');
     }
 

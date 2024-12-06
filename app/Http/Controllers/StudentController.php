@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Actions\Student\CreateStudentAction;
 use App\Http\Actions\Student\StoreStudentAction;
+use App\Http\Actions\Student\UpdateStatusAction;
 use App\Http\Actions\Student\ViewStudentAction;
 use App\Http\Requests\StudentRequest;
+use App\Http\Requests\StudentStatusUpdateRequest;
 use App\Models\Student;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -59,6 +61,11 @@ class StudentController extends Controller
     public function update(Request $request, Student $student)
     {
         //
+    }
+
+    public function updateStatus(StudentStatusUpdateRequest $request, Student $student, UpdateStatusAction $action): RedirectResponse
+    {
+        return $action->handle($request, $student);
     }
 
     /**

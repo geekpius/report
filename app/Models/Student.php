@@ -17,7 +17,9 @@ class Student extends Model
 
     protected $fillable = [
         'number',
-        'name',
+        'surname',
+        'first_name',
+        'other_names',
         'gender',
         'form',
         'status',
@@ -38,12 +40,23 @@ class Student extends Model
         return $this->hasMany(Assessment::class);
     }
 
-    public function setNameAttribute(string $value) : void
+    public function setSurnameAttribute(string $value) : void
     {
-        $this->attributes['name'] = strtolower($value);
+        $this->attributes['surname'] = strtolower($value);
     }
-    public function getNameAttribute(string $value) : string
+
+    public function setFirstNameAttribute(string $value) : void
     {
-        return ucwords($value);
+        $this->attributes['first_name'] = strtolower($value);
+    }
+
+    public function setOtherNamesAttribute(?string $value) : void
+    {
+        $this->attributes['other_names'] = strtolower($value);
+    }
+
+    public function getFullName(): string
+    {
+        return trim($this->surname.' '.$this->first_name. ' '.$this->other_names);
     }
 }

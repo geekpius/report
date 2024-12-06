@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Actions\Academic\StoreAcademicAction;
+use App\Http\Actions\Academic\UpdateAcademicAction;
 use App\Http\Actions\Academic\ViewAcademicAction;
 use App\Http\Requests\AcademicRequest;
 use App\Models\Academic;
@@ -55,9 +56,9 @@ class AcademicController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Academic $academic)
+    public function update(AcademicRequest $request, Academic $academic, UpdateAcademicAction $action): RedirectResponse
     {
-        //
+        return $action->handle($request, $academic);
     }
 
     /**

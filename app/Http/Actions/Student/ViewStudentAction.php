@@ -12,7 +12,7 @@ class ViewStudentAction
     public function handle(): Response
     {
         return Inertia::render('Student/View', [
-            'students' => StudentResource::collection(Student::all()),
+            'students' => StudentResource::collection(Student::orderBy('surname')->get()),
         ]);
     }
 
