@@ -55,6 +55,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('/create', [StudentController::class, 'create'])->name('student.create');
             Route::post('/store', [StudentController::class, 'store'])->name('student.submit');
             Route::put('/{student}/update-status', [StudentController::class, 'updateStatus'])->name('student.update.status');
+            Route::get('/{student}/show', [StudentController::class, 'show'])->name('student.show');
+            Route::put('/{student}/update', [StudentController::class, 'update'])->name('student.update');
         });
 
         Route::prefix('subjects')->group(function (){

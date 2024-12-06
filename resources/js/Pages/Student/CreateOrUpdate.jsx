@@ -10,9 +10,10 @@ import Column from "@/Components/Column";
 import SelectInput from "@/Components/SelectInput";
 import ObjectSelection from "@/Components/ObjectSelection";
 import InputLabel from "@/Components/InputLabel.jsx";
+import {useEffect} from "react";
 
 export default function CreateOrUpdate({ auth, student, levels }) {
-    const { data, setData, post, processing, errors } = useForm({
+    const { data, setData, post, put, processing, errors } = useForm({
         surname: '',
         first_name: '',
         other_names: '',
@@ -20,10 +21,27 @@ export default function CreateOrUpdate({ auth, student, levels }) {
         form: '',
     });
 
+    useEffect(() => {
+        if(student){
+            setData(data => ({
+                ...data,
+                surname: student.surname,
+                first_name: student.first_name,
+                other_names: student.other_names,
+                gender: student.gender,
+                form: student.form,
+            }));
+        }
+    }, []);
+
     const submit = (e) => {
         e.preventDefault();
 
-        post(route('student.submit'));
+        if(student){
+            put(route('student.update', {student: student.id}));
+        }else {
+            post(route('student.submit'));
+        }
     };
 
     return (
@@ -116,7 +134,7 @@ export default function CreateOrUpdate({ auth, student, levels }) {
 
                                 <div className="flex items-center justify-end mt-4">
                                     <PrimaryButton className="ms-4 btn btn-primary" disabled={processing}>
-                                        Submit
+                                        {student ? 'Update':'Submit'}
                                     </PrimaryButton>
                                 </div>
                             </form>

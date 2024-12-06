@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Actions\Student\CreateStudentAction;
+use App\Http\Actions\Student\ShowStudentAction;
 use App\Http\Actions\Student\StoreStudentAction;
 use App\Http\Actions\Student\UpdateStatusAction;
+use App\Http\Actions\Student\UpdateStudentAction;
 use App\Http\Actions\Student\ViewStudentAction;
 use App\Http\Requests\StudentRequest;
 use App\Http\Requests\StudentStatusUpdateRequest;
@@ -42,9 +44,9 @@ class StudentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Student $student)
+    public function show(Student $student, ShowStudentAction $action): Response
     {
-        //
+        return $action->handle($student);
     }
 
     /**
@@ -58,9 +60,9 @@ class StudentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Student $student)
+    public function update(StudentRequest $request, Student $student, UpdateStudentAction $action): RedirectResponse
     {
-        //
+        return $action->handle($request, $student);
     }
 
     public function updateStatus(StudentStatusUpdateRequest $request, Student $student, UpdateStatusAction $action): RedirectResponse

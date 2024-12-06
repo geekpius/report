@@ -79,33 +79,46 @@ export default function View({ auth, flash, students }) {
                                 <TD value={student.gender} />
                                 <TD value={student.form} />
                                 <TD value={student.status} />
-                                <TD title={'Drop student'}>
-                                    {
-                                        student.status === 'active' ?
-                                            <button
-                                                onClick={() => {
-                                                    setValues(student);
-                                                }}
-                                                className={'flex items-center gap-2'}
-                                                data-toggle="modal"
-                                                data-target="#dropModal"
-                                            >
-                                                <i className={'fa fa-times-circle text-danger'}/>
-                                                Drop student
-                                            </button>
-                                            :
-                                            <button
-                                                onClick={() => {
-                                                    setValues(student);
-                                                }}
-                                                className={'flex items-center gap-2'}
-                                                data-toggle="modal"
-                                                data-target="#dropModal"
-                                            >
-                                                <i className={'fa fa-check-circle text-primary'}/>
-                                                Activate student
-                                            </button>
-                                    }
+                                <TD>
+                                    <div className={'flex items-center gap-4 w-fit'}>
+                                        <RLink
+                                            to={route('student.show', {student: student.id})}
+                                            title={'Edit student'}
+                                            onClick={() => {
+                                                setValues(student);
+                                            }}
+                                        >
+                                            <i className={'fa fa-edit text-primary fa-lg'}/>
+                                        </RLink>
+                                        <div title={'Drop student'}>
+                                            {
+                                                student.status === 'active' ?
+                                                    <button
+                                                        onClick={() => {
+                                                            setValues(student);
+                                                        }}
+                                                        className={'flex items-center gap-0.5'}
+                                                        data-toggle="modal"
+                                                        data-target="#dropModal"
+                                                    >
+                                                        <i className={'fa fa-times-circle text-danger'}/>
+                                                        Drop
+                                                    </button>
+                                                    :
+                                                    <button
+                                                        onClick={() => {
+                                                            setValues(student);
+                                                        }}
+                                                        className={'flex items-center gap-0.5'}
+                                                        data-toggle="modal"
+                                                        data-target="#dropModal"
+                                                    >
+                                                        <i className={'fa fa-check-circle text-primary'}/>
+                                                        Activate
+                                                    </button>
+                                            }
+                                        </div>
+                                    </div>
                                 </TD>
                             </TRow>
                         ))}
@@ -115,12 +128,13 @@ export default function View({ auth, flash, students }) {
             </Card>
 
             <Modal id="dropModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                   aria-hidden="true" title={title} >
+                   aria-hidden="true" title={title}>
                 <ModalBody>
                     {description}
                 </ModalBody>
                 <ModalFooter>
-                    <PrimaryButton className="btn bg-secondary text-white mr-3 px-4" type="button" data-dismiss="modal">No</PrimaryButton>
+                    <PrimaryButton className="btn bg-secondary text-white mr-3 px-4" type="button"
+                                   data-dismiss="modal">No</PrimaryButton>
                     <PrimaryButton
                         onClick={updateStatus}
                         className="btn btn-primary px-4"
@@ -129,5 +143,5 @@ export default function View({ auth, flash, students }) {
                 </ModalFooter>
             </Modal>
         </AuthenticatedLayout>
-        );
+    );
 }
