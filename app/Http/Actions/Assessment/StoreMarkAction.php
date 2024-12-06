@@ -32,7 +32,7 @@ class StoreMarkAction
 
             event(new MarkEvent($mark, $academic, $request));
 
-            session()->flash('success', $mark->student->name.' marks assessment created');
+            session()->flash('success', $mark->student->name.' marks assessment created successfully.');
 
             return redirect()->route('mark', parameters: ['level' => $request->form, 'subject'=>$request->subject]);
         }catch (\Exception $exception){

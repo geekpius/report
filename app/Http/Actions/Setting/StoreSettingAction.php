@@ -16,7 +16,7 @@ class StoreSettingAction
         }else{
             Setting::query()->create($request->validated());
         }
-        session()->flash('success', 'Settings updated');
+        session()->flash('success', 'Settings updated successfully.');
 
         return redirect()->route('setting');
     }

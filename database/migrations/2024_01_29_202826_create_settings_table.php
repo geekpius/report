@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('school_postal')->nullable();
             $table->string('motto')->nullable();
             $table->string('school_phone')->nullable();
-            $table->double('sba_percent')->default(0.3);
-            $table->double('exam_percent')->default(0.7);
+            $table->double('sba_percent')->default(0.5);
+            $table->double('exam_percent')->default(0.5);
             $table->string('signature')->nullable();
             $table->string('stamp')->nullable();
             $table->string('logo')->nullable();

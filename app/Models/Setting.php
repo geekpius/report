@@ -15,6 +15,8 @@ class Setting extends Model
         'school_postal',
         'motto',
         'school_phone',
+        'sba_percent',
+        'exam_percent',
         'signature',
         'stamp',
         'logo',
