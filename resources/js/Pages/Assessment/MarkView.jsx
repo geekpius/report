@@ -159,7 +159,7 @@ export default function View({ auth, levels, subjects, students, routeInfo, flas
                                         onClick={() => selectRecord(index, obj)}
                                     >
                                         <TD value={obj.number} className={values.selectedIndex === index? 'text-white':''} />
-                                        <TD value={obj.name} className={values.selectedIndex === index? 'text-white':''} />
+                                        <TD value={obj.fullName} className={`!uppercase ${values.selectedIndex === index? 'text-white':''}`} />
                                         <TD value={obj.gender} className={values.selectedIndex === index? 'text-white':''} />
                                     </TRow>
                                 ))}

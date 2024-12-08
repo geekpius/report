@@ -50,7 +50,7 @@ class Mark extends Model
         return strtoupper($value);
     }
 
-    public function setRemarkAttribute(string $value) : void
+    public function setRemarkAttribute(?string $value) : void
     {
         $this->attributes['remark'] = strtolower($value);
     }

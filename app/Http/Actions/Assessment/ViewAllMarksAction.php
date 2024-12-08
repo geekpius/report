@@ -12,6 +12,7 @@ use App\Models\Setting;
 use App\Models\Subject;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -20,9 +21,12 @@ class ViewAllMarksAction
     public function handle(Request $request): Response
     {
         $academic = Academic::query()->latest()->first();
+        $subjectTeachers = Auth::user()->subjectTeachers;
+        $subjects = $subjectTeachers->load('subject.levels');
+
         return Inertia::render('Assessment/AllMarksView', [
             'levels' => LevelResource::collection(Level::all()),
-            'subjects' => SubjectResource::collection(Subject::with('levels')->get()),
+            'subjects' => $subjectTeachers->count() > 0 ?  SubjectResource::collection($subjects->pluck('subject')) : SubjectResource::collection(Subject::with('levels')->get()),
             'marks' => MarkResource::collection(Mark::where('form', $request->level)
                 ->where('subject', $request->subject)->where('year', $academic->year)
                 ->where('term', $academic->term)->with(['student'])->get()

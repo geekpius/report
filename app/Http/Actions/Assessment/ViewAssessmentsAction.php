@@ -12,6 +12,7 @@ use App\Models\Level;
 use App\Models\Mark;
 use App\Models\Subject;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -20,8 +21,11 @@ class ViewAssessmentsAction
     public function handle(Request $request): Response
     {
         $academic = Academic::query()->latest()->first();
+        $classTeachers = Auth::user()->classTeachers;
+        $levels = $classTeachers->load('level');
+
         return Inertia::render('Assessment/Assessments', [
-            'levels' => LevelResource::collection(Level::all()),
+            'levels' => $classTeachers->count() > 0 ? LevelResource::collection($levels->pluck('level')) : LevelResource::collection(Level::all()),
             'assessments' => AssessmentResource::collection(Assessment::where('level', $request->level)
                 ->where('year', $academic->year)->where('term', $academic->term)->with(['student'])->get()
             ),

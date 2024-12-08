@@ -66,7 +66,7 @@ export default function View({ auth, levels, students, academic, routeInfo, flas
         clearErrors()
         setData(data => ({
             ...data,
-            name: student.name,
+            name: student.fullName?.toUpperCase(),
             student_id: student.id,
             year: academic.data.year,
             term: academic.data.term,
@@ -140,7 +140,7 @@ export default function View({ auth, levels, students, academic, routeInfo, flas
                                         onClick={() => selectRecord(index, obj)}
                                     >
                                         <TD value={obj.number} className={values.selectedIndex === index? 'text-white':''} />
-                                        <TD value={obj.name} className={values.selectedIndex === index? 'text-white':''} />
+                                        <TD value={obj.fullName} className={`!uppercase ${values.selectedIndex === index? 'text-white':''}`} />
                                         <TD value={obj.gender} className={values.selectedIndex === index? 'text-white':''} />
                                     </TRow>
                                 ))}
@@ -213,7 +213,7 @@ export default function View({ auth, levels, students, academic, routeInfo, flas
                                         id="number_in_class"
                                         type="tel"
                                         name="number_in_class"
-                                        value={data.number_in_class}
+                                        value={data.number_in_class ?? ''}
                                         className="mt-1 block w-full py-1 text-sm"
                                         onChange={(e) => setData('number_in_class', e.target.value)}
                                         placeholder={'Number in class'}
@@ -232,7 +232,7 @@ export default function View({ auth, levels, students, academic, routeInfo, flas
                                         id="attendance"
                                         type="tel"
                                         name="attendance"
-                                        value={data.attendance}
+                                        value={data.attendance ?? ''}
                                         className="mt-1 block w-full py-1 text-sm"
                                         onChange={(e) => setData('attendance', e.target.value)}
                                         placeholder={'Enter attendance'}
@@ -265,7 +265,7 @@ export default function View({ auth, levels, students, academic, routeInfo, flas
                                                 data={['Satisfactory', 'Respectful', 'Humble', 'Approachable', 'Truant', 'Bully', 'Sociable']}
                                                 id={'conduct'}
                                                 name="conduct"
-                                                value={data.conduct}
+                                                value={data.conduct ?? ''}
                                                 onChange={(e) => setData('conduct', e.target.value)}
                                                 placeholder={'Select conduct'}
                                                 disabled={values.fieldDisabled}
@@ -280,7 +280,7 @@ export default function View({ auth, levels, students, academic, routeInfo, flas
                                                 data={['Hardworking', 'Not serious in class', 'Quiet in class', 'Peer influence', 'Curios', 'Slow', 'Lazy', 'Dependable', 'Short attention span', 'Eager to learn']}
                                                 id={'attitude'}
                                                 name="attitude"
-                                                value={data.attitude}
+                                                value={data.attitude ?? ''}
                                                 onChange={(e) => setData('attitude', e.target.value)}
                                                 placeholder={'Select attitude'}
                                                 disabled={values.fieldDisabled}
@@ -295,7 +295,7 @@ export default function View({ auth, levels, students, academic, routeInfo, flas
                                                 data={['Reading', 'Drumming', 'Sports', 'Music and dance', 'Art work', 'Drawing', 'Experimenting', 'Adventurous', 'Technology and Gadget']}
                                                 id={'interest'}
                                                 name="interest"
-                                                value={data.interest}
+                                                value={data.interest ?? ''}
                                                 onChange={(e) => setData('interest', e.target.value)}
                                                 placeholder={'Select interest'}
                                                 disabled={values.fieldDisabled}
@@ -313,7 +313,7 @@ export default function View({ auth, levels, students, academic, routeInfo, flas
                                             data={['Good Performance, Keep It Up', 'Could Do Better', 'More Room For Improvement', 'Has Improved', 'Buck Up', 'Must Do Extra Hard Work']}
                                             id={'remark'}
                                             name="remark"
-                                            value={data.remark}
+                                            value={data.remark ?? ''}
                                             onChange={(e) => setData('remark', e.target.value)}
                                             placeholder={'Select class teacher\'s remark'}
                                             disabled={values.fieldDisabled}
@@ -330,7 +330,7 @@ export default function View({ auth, levels, students, academic, routeInfo, flas
                                             data={['Enthusiastic Learner who follow school rules', 'Has positive attitude towards school', 'Enjoys School Activities', 'Contributes to class discussion', 'Class participation has improved', 'Demonstrates creativity', 'Demonstrates progress', 'Unsatisfactory class work', 'Weak in math fundamentals']}
                                             id={'head_remark'}
                                             name="head_remark"
-                                            value={data.head_remark}
+                                            value={data.head_remark ?? ''}
                                             onChange={(e) => setData('head_remark', e.target.value)}
                                             placeholder={'Select head teacher\'s remark'}
                                             disabled={values.fieldDisabled}

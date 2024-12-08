@@ -109,10 +109,10 @@ export default function View({ auth, levels, subjects, marks, percents, routeInf
                             <TRow
                                 key={obj.id}
                             >
-                                <TD value={obj.student.number} />
-                                <TD value={obj.student.name} />
+                                <TD className={'whitespace-nowrap'} value={obj.student.number} />
+                                <TD className={'whitespace-nowrap'} value={`${obj.student.surname} ${obj.student.first_name} ${obj.student.other_names}`.trim().toUpperCase()} />
                                 <TD value={obj.student.gender} />
-                                <TD value={obj.subject} />
+                                <TD className={'whitespace-nowrap'} value={obj.subject} />
                                 <TD value={obj.assessmentOne} />
                                 <TD value={obj.assessmentTwo} />
                                 <TD value={obj.assessmentThree} />

@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('year');
             $table->string('term');
             $table->string('form');
-            $table->double('total')->default(0);
-            $table->integer('position')->default(0);
+            $table->double('total')->nullable()->default(0);
+            $table->integer('position')->nullable()->default(0);
             $table->timestamps();
         });
     }

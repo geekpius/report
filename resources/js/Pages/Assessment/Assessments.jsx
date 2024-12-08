@@ -84,8 +84,8 @@ export default function View({ auth, levels, assessments, routeInfo }) {
                             <TRow
                                 key={obj.id}
                             >
-                                <TD value={obj.student.number} />
-                                <TD value={obj.student.name} />
+                                <TD className={'whitespace-nowrap'} value={obj.student.number} />
+                                <TD className={'whitespace-nowrap'} value={obj.student.fullName} />
                                 <TD value={obj.student.gender} />
                                 <TD value={obj.term} />
                                 <TD value={obj.promoted} />

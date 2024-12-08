@@ -17,7 +17,10 @@ class StudentAssessmentResource extends JsonResource
         return [
             'id' => $this->id,
             'number' => $this->number,
-            'name' => $this->name,
+            'surname' => $this->surname,
+            'firstName' => $this->first_name,
+            'otherNames' => $this->other_names,
+            'fullName' => $this->getFullName(),
             'gender' => $this->gender,
             'year' => $this->year,
             'term' => $this->term,

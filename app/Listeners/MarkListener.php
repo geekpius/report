@@ -29,8 +29,8 @@ class MarkListener
         $request = $event->request;
 
         $settings = Setting::query()->first();
-        $sbaPercent = ($settings->sba_percent*($mark->assessment_sub_total+$mark->test_sub_total+$mark->assignment_sub_total));
-        $examPercent = ($settings->exam_percent*$mark->exam);
+        $sbaPercent = ($settings->sba_percent*(($mark->assessment_sub_total ?? 0)+($mark->test_sub_total ?? 0)+($mark->assignment_sub_total ?? 0)));
+        $examPercent = ($settings->exam_percent*($mark->exam ?? 0));
 
         $mark->update([
             'sba_percent' => $sbaPercent,
