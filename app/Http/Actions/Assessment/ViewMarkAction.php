@@ -26,7 +26,7 @@ class ViewMarkAction
         return Inertia::render('Assessment/MarkView', [
             'levels' => LevelResource::collection(Level::all()),
             'subjects' => $subjectTeachers->count() > 0 ?  SubjectResource::collection($subjects->pluck('subject')) : SubjectResource::collection(Subject::with('levels')->get()),
-            'students' =>  StudentMarkResource::collection(Student::where('students.form', $request->level)
+            'students' =>  StudentMarkResource::collection(Student::where('students.form', $request->level)->orderBy('students.gender', 'asc')->orderBy('students.surname', 'asc')
                 ->leftJoin('marks', function ($join) use ($request, $academic) {
                     $join->on('students.id', '=', 'marks.student_id')
                         ->where('marks.subject', $request->subject)

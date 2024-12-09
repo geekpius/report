@@ -3,14 +3,11 @@
 namespace App\Http\Actions\Assessment;
 
 use App\Events\MarkEvent;
-use App\Http\Requests\GradeRequest;
 use App\Http\Requests\MarkRequest;
 use App\Models\Academic;
 use App\Models\Grade;
 use App\Models\Mark;
-use App\Models\Overall;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\DB;
 
 class StoreMarkAction
 {

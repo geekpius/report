@@ -4,13 +4,9 @@ namespace App\Http\Actions\Assessment;
 
 use App\Http\Resources\AssessmentResource;
 use App\Http\Resources\LevelResource;
-use App\Http\Resources\MarkResource;
-use App\Http\Resources\SubjectResource;
 use App\Models\Academic;
 use App\Models\Assessment;
 use App\Models\Level;
-use App\Models\Mark;
-use App\Models\Subject;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
