@@ -5,7 +5,6 @@ namespace App\Http\Actions\Assessment;
 use App\Events\MarkEvent;
 use App\Http\Requests\MarkRequest;
 use App\Models\Academic;
-use App\Models\Grade;
 use App\Models\Mark;
 use Illuminate\Http\RedirectResponse;
 
@@ -15,12 +14,10 @@ class StoreMarkAction
     {
         try{
             $academic = Academic::query()->latest()->first();
-            $grade = Grade::query()->where('low', '<=', ($request->exam ?? 0))
-                ->where('high', '>=', ($request->exam ?? 0))->first();
 
             $mark = Mark::query()->updateOrCreate(
                 ['student_id' => $request->student_id, 'year'=>$academic->year, 'term'=>$academic->term],
-                [...$request->validated(), ...['year'=>$academic->year, 'term'=>$academic->term, 'remark'=>$grade?->remark,
+                [...$request->validated(), ...['year'=>$academic->year, 'term'=>$academic->term,
                     'assessment_sub_total' => $this->getAssessmentSubTotal($request), 'test_sub_total' => $this->getTestSubTotal($request),
                     'assignment_sub_total' => $this->getAssignmentSubTotal($request),
                     ],

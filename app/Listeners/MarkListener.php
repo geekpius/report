@@ -3,11 +3,10 @@
 namespace App\Listeners;
 
 use App\Events\MarkEvent;
+use App\Models\Grade;
 use App\Models\Mark;
 use App\Models\Overall;
 use App\Models\Setting;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 
 class MarkListener
 {
@@ -31,11 +30,16 @@ class MarkListener
         $settings = Setting::query()->first();
         $sbaPercent = ($settings->sba_percent*(($mark->assessment_sub_total ?? 0)+($mark->test_sub_total ?? 0)+($mark->assignment_sub_total ?? 0)));
         $examPercent = ($settings->exam_percent*($mark->exam ?? 0));
+        $total = ($sbaPercent+$examPercent);
+
+        $grade = Grade::query()->where('low', '<=', $total)
+            ->where('high', '>=', $total)->first();
 
         $mark->update([
+            'remark' => $grade?->remark,
             'sba_percent' => $sbaPercent,
             'exam_percent' => $examPercent,
-            'total' => ($sbaPercent+$examPercent),
+            'total' => $total,
         ]);
 
         $overallMarks = Mark::query()->where('student_id', $request->student_id)->where('year', $academic->year)
